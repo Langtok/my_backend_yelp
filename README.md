@@ -12,6 +12,10 @@ TODO - How to install your project? npm install? make? make re?
 
 ## Usage
 TODO - How does it work?
+GraphQL endpoint: https://y5ghjmi5rre6da4tpd5z5og2mu.appsync-api.us-west-2.amazo
+naws.com/graphql
+GraphQL API KEY: da2-xcztndomo5fddikj5zkx3vesxy
+
 ```
 ./my_project argument1 argument2
 ```
