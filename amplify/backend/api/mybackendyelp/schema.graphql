@@ -2,8 +2,65 @@
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
-type Todo @model {
+type User
+  @model
+  @auth(
+    rules: [
+      { allow: owner } # Users can only manage their own data
+    ]
+  ) {
+  id: ID!
+  username: String!
+  email: String!
+  reviews: [Review] @hasMany
+  favorites: [Favorite] @hasMany
+}
+
+type Business
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read] } # Anyone can READ businesses
+      { allow: private, operations: [create, update, delete] } # Only signed-in users can manage
+    ]
+  ) {
   id: ID!
   name: String!
-  description: String
+  category: String!
+  address: String!
+  latitude: Float
+  longitude: Float
+  rating: Float
+  images: [String]
+  reviews: [Review] @hasMany
+  createdAt: AWSDateTime
+}
+
+type Review
+  @model
+  @auth(
+    rules: [
+      { allow: owner } # Only review authors can modify their reviews
+      { allow: private, operations: [read] } # Any signed-in user can read reviews
+    ]
+  ) {
+  id: ID!
+  content: String!
+  rating: Int!
+  businessID: ID! @index(name: "byBusiness")
+  owner: String
+  createdAt: AWSDateTime
+}
+
+type Favorite
+  @model
+  @auth(
+    rules: [
+      { allow: owner } # Users can only manage their own favorites
+    ]
+  ) {
+  id: ID!
+  businessID: ID! @index(name: "byUser")
+  userID: ID!
+  createdAt: AWSDateTime
 }

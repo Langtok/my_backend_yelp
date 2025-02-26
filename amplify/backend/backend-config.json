@@ -1,13 +1,30 @@
 {
   "api": {
     "mybackendyelp": {
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "mybackendyelpf05f2ee5"
+        }
+      ],
       "output": {
         "authConfig": {
-          "additionalAuthenticationProviders": [],
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+              "userPoolConfig": {
+                "userPoolId": "authmybackendyelpf05f2ee5"
+              }
+            }
+          ],
           "defaultAuthentication": {
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 7
+              "apiKeyExpirationDate": "2026-02-26T23:10:59.502Z",
+              "apiKeyExpirationDays": 365,
+              "description": "mybackendyelp"
             },
             "authenticationType": "API_KEY"
           }
@@ -18,7 +35,7 @@
     }
   },
   "auth": {
-    "mybackendyelpc064764d": {
+    "mybackendyelpf05f2ee5": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {

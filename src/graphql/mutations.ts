@@ -8,54 +8,381 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
-export const createTodo = /* GraphQL */ `mutation CreateTodo(
-  $input: CreateTodoInput!
-  $condition: ModelTodoConditionInput
+export const createUser = /* GraphQL */ `mutation CreateUser(
+  $input: CreateUserInput!
+  $condition: ModelUserConditionInput
 ) {
-  createTodo(input: $input, condition: $condition) {
+  createUser(input: $input, condition: $condition) {
     id
-    name
-    description
+    username
+    email
+    reviews {
+      items {
+        id
+        content
+        rating
+        businessID
+        owner
+        createdAt
+        updatedAt
+        userReviewsId
+        businessReviewsId
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    favorites {
+      items {
+        id
+        businessID
+        userID
+        createdAt
+        updatedAt
+        userFavoritesId
+        owner
+        __typename
+      }
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
+    owner
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.CreateTodoMutationVariables,
-  APITypes.CreateTodoMutation
+  APITypes.CreateUserMutationVariables,
+  APITypes.CreateUserMutation
 >;
-export const updateTodo = /* GraphQL */ `mutation UpdateTodo(
-  $input: UpdateTodoInput!
-  $condition: ModelTodoConditionInput
+export const updateUser = /* GraphQL */ `mutation UpdateUser(
+  $input: UpdateUserInput!
+  $condition: ModelUserConditionInput
 ) {
-  updateTodo(input: $input, condition: $condition) {
+  updateUser(input: $input, condition: $condition) {
     id
-    name
-    description
+    username
+    email
+    reviews {
+      items {
+        id
+        content
+        rating
+        businessID
+        owner
+        createdAt
+        updatedAt
+        userReviewsId
+        businessReviewsId
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    favorites {
+      items {
+        id
+        businessID
+        userID
+        createdAt
+        updatedAt
+        userFavoritesId
+        owner
+        __typename
+      }
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
+    owner
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.UpdateTodoMutationVariables,
-  APITypes.UpdateTodoMutation
+  APITypes.UpdateUserMutationVariables,
+  APITypes.UpdateUserMutation
 >;
-export const deleteTodo = /* GraphQL */ `mutation DeleteTodo(
-  $input: DeleteTodoInput!
-  $condition: ModelTodoConditionInput
+export const deleteUser = /* GraphQL */ `mutation DeleteUser(
+  $input: DeleteUserInput!
+  $condition: ModelUserConditionInput
 ) {
-  deleteTodo(input: $input, condition: $condition) {
+  deleteUser(input: $input, condition: $condition) {
+    id
+    username
+    email
+    reviews {
+      items {
+        id
+        content
+        rating
+        businessID
+        owner
+        createdAt
+        updatedAt
+        userReviewsId
+        businessReviewsId
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    favorites {
+      items {
+        id
+        businessID
+        userID
+        createdAt
+        updatedAt
+        userFavoritesId
+        owner
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteUserMutationVariables,
+  APITypes.DeleteUserMutation
+>;
+export const createBusiness = /* GraphQL */ `mutation CreateBusiness(
+  $input: CreateBusinessInput!
+  $condition: ModelBusinessConditionInput
+) {
+  createBusiness(input: $input, condition: $condition) {
     id
     name
-    description
+    category
+    address
+    latitude
+    longitude
+    rating
+    images
+    reviews {
+      items {
+        id
+        content
+        rating
+        businessID
+        owner
+        createdAt
+        updatedAt
+        userReviewsId
+        businessReviewsId
+        __typename
+      }
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.DeleteTodoMutationVariables,
-  APITypes.DeleteTodoMutation
+  APITypes.CreateBusinessMutationVariables,
+  APITypes.CreateBusinessMutation
+>;
+export const updateBusiness = /* GraphQL */ `mutation UpdateBusiness(
+  $input: UpdateBusinessInput!
+  $condition: ModelBusinessConditionInput
+) {
+  updateBusiness(input: $input, condition: $condition) {
+    id
+    name
+    category
+    address
+    latitude
+    longitude
+    rating
+    images
+    reviews {
+      items {
+        id
+        content
+        rating
+        businessID
+        owner
+        createdAt
+        updatedAt
+        userReviewsId
+        businessReviewsId
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateBusinessMutationVariables,
+  APITypes.UpdateBusinessMutation
+>;
+export const deleteBusiness = /* GraphQL */ `mutation DeleteBusiness(
+  $input: DeleteBusinessInput!
+  $condition: ModelBusinessConditionInput
+) {
+  deleteBusiness(input: $input, condition: $condition) {
+    id
+    name
+    category
+    address
+    latitude
+    longitude
+    rating
+    images
+    reviews {
+      items {
+        id
+        content
+        rating
+        businessID
+        owner
+        createdAt
+        updatedAt
+        userReviewsId
+        businessReviewsId
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteBusinessMutationVariables,
+  APITypes.DeleteBusinessMutation
+>;
+export const createReview = /* GraphQL */ `mutation CreateReview(
+  $input: CreateReviewInput!
+  $condition: ModelReviewConditionInput
+) {
+  createReview(input: $input, condition: $condition) {
+    id
+    content
+    rating
+    businessID
+    owner
+    createdAt
+    updatedAt
+    userReviewsId
+    businessReviewsId
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateReviewMutationVariables,
+  APITypes.CreateReviewMutation
+>;
+export const updateReview = /* GraphQL */ `mutation UpdateReview(
+  $input: UpdateReviewInput!
+  $condition: ModelReviewConditionInput
+) {
+  updateReview(input: $input, condition: $condition) {
+    id
+    content
+    rating
+    businessID
+    owner
+    createdAt
+    updatedAt
+    userReviewsId
+    businessReviewsId
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateReviewMutationVariables,
+  APITypes.UpdateReviewMutation
+>;
+export const deleteReview = /* GraphQL */ `mutation DeleteReview(
+  $input: DeleteReviewInput!
+  $condition: ModelReviewConditionInput
+) {
+  deleteReview(input: $input, condition: $condition) {
+    id
+    content
+    rating
+    businessID
+    owner
+    createdAt
+    updatedAt
+    userReviewsId
+    businessReviewsId
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteReviewMutationVariables,
+  APITypes.DeleteReviewMutation
+>;
+export const createFavorite = /* GraphQL */ `mutation CreateFavorite(
+  $input: CreateFavoriteInput!
+  $condition: ModelFavoriteConditionInput
+) {
+  createFavorite(input: $input, condition: $condition) {
+    id
+    businessID
+    userID
+    createdAt
+    updatedAt
+    userFavoritesId
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateFavoriteMutationVariables,
+  APITypes.CreateFavoriteMutation
+>;
+export const updateFavorite = /* GraphQL */ `mutation UpdateFavorite(
+  $input: UpdateFavoriteInput!
+  $condition: ModelFavoriteConditionInput
+) {
+  updateFavorite(input: $input, condition: $condition) {
+    id
+    businessID
+    userID
+    createdAt
+    updatedAt
+    userFavoritesId
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateFavoriteMutationVariables,
+  APITypes.UpdateFavoriteMutation
+>;
+export const deleteFavorite = /* GraphQL */ `mutation DeleteFavorite(
+  $input: DeleteFavoriteInput!
+  $condition: ModelFavoriteConditionInput
+) {
+  deleteFavorite(input: $input, condition: $condition) {
+    id
+    businessID
+    userID
+    createdAt
+    updatedAt
+    userFavoritesId
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteFavoriteMutationVariables,
+  APITypes.DeleteFavoriteMutation
 >;
