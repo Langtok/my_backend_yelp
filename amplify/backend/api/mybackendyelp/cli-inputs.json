@@ -6,8 +6,8 @@
     "defaultAuthType": {
       "mode": "API_KEY",
       "expirationTime": 365,
-      "apiKeyExpirationDate": "2026-02-26T23:10:59.502Z",
-      "keyDescription": "mybackendyelp"
+      "apiKeyExpirationDate": "2026-02-27T09:42:11.426Z",
+      "keyDescription": "365"
     },
     "additionalAuthTypes": [
       {

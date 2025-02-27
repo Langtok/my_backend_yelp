@@ -22,9 +22,9 @@
           ],
           "defaultAuthentication": {
             "apiKeyConfig": {
-              "apiKeyExpirationDate": "2026-02-26T23:10:59.502Z",
+              "apiKeyExpirationDate": "2026-02-27T09:42:11.426Z",
               "apiKeyExpirationDays": 365,
-              "description": "mybackendyelp"
+              "description": "365"
             },
             "authenticationType": "API_KEY"
           }

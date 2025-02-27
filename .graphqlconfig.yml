@@ -2,14 +2,13 @@ projects:
   mybackendyelp:
     schemaPath: amplify/backend/api/mybackendyelp/build/schema.graphql
     includes:
-      - src/graphql/**/*.ts
+      - src/graphql/**/*.js
     excludes:
       - ./amplify/**
-      - src/API.ts
     extensions:
       amplify:
-        codeGenTarget: typescript
-        generatedFileName: src/API.ts
+        codeGenTarget: javascript
+        generatedFileName: ''
         docsFilePath: src/graphql
         region: eu-west-1
         apiId: null

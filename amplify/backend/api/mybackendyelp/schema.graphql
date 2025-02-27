@@ -64,3 +64,4 @@ type Favorite
   userID: ID!
   createdAt: AWSDateTime
 }
+
