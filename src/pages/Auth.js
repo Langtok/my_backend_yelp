@@ -1,5 +1,9 @@
-import { Auth } from "aws-amplify";
+import { Amplify } from "aws-amplify";
+import { signIn, signOut, signUp, getCurrentUser } from "aws-amplify/auth";
+import awsExports from "../aws-exports";
 import { useState, useEffect } from "react";
+
+Amplify.configure(awsExports);
 
 function AuthPage({ setUser }) {
   const [email, setEmail] = useState("");
@@ -7,39 +11,63 @@ function AuthPage({ setUser }) {
   const [user, setUserState] = useState(null);
 
   useEffect(() => {
-    Auth.currentAuthenticatedUser()
-      .then((user) => setUserState(user))
+    getCurrentUser()
+      .then((user) => {
+        setUserState(user);
+        setUser(user);
+      })
       .catch(() => setUserState(null));
-  }, []);
+  }, [setUser]);
 
-  const signUp = async () => {
-    await Auth.signUp({ username: email, password, attributes: { email } });
-    alert("Sign-up successful! Please check your email to confirm.");
+  const handleSignUp = async () => {
+    try {
+      await signUp({ username: email, password, options: { userAttributes: { email } } });
+      alert("Sign-up successful! Please check your email to confirm.");
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
-  const signIn = async () => {
-    const user = await Auth.signIn(email, password);
-    setUserState(user);
-    setUser(user);
+  const handleSignIn = async () => {
+    try {
+      const user = await signIn({ username: email, password });
+      setUserState(user);
+      setUser(user);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
-  const signOut = async () => {
-    await Auth.signOut();
-    setUserState(null);
-    setUser(null);
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      setUserState(null);
+      setUser(null);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return user ? (
     <div>
       <p>Welcome, {user.username}!</p>
-      <button onClick={signOut}>Sign Out</button>
+      <button onClick={handleSignOut}>Sign Out</button>
     </div>
   ) : (
     <div>
-      <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-      <input placeholder="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
-      <button onClick={signUp}>Sign Up</button>
-      <button onClick={signIn}>Sign In</button>
+      <input 
+        placeholder="Email" 
+        onChange={(e) => setEmail(e.target.value)} 
+        value={email}
+      />
+      <input 
+        placeholder="Password" 
+        type="password" 
+        onChange={(e) => setPassword(e.target.value)} 
+        value={password}
+      />
+      <button onClick={handleSignUp}>Sign Up</button>
+      <button onClick={handleSignIn}>Sign In</button>
     </div>
   );
 }

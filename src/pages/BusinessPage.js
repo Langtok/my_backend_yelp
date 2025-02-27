@@ -1,5 +1,6 @@
 import { API } from "aws-amplify";
-import { getBusiness } from "../graphql/queries";
+import { getBusiness } from "../graphql/queries.ts";
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ReviewForm from "../components/ReviewForm";
