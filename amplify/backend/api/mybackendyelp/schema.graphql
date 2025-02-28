@@ -2,6 +2,8 @@
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
 type User
   @model
   @auth(
@@ -14,6 +16,7 @@ type User
   email: String!
   reviews: [Review] @hasMany
   favorites: [Favorite] @hasMany
+  reservations: [Reservation] @hasMany
 }
 
 type Business
@@ -22,6 +25,7 @@ type Business
     rules: [
       { allow: public, operations: [read] } # Anyone can READ businesses
       { allow: private, operations: [create, update, delete] } # Only signed-in users can manage
+      { allow: owner, operations: [update] } # Business owners can edit their own businesses
     ]
   ) {
   id: ID!
@@ -30,9 +34,13 @@ type Business
   address: String!
   latitude: Float
   longitude: Float
+  phoneNumber: String
+  website: String
   rating: Float
   images: [String]
   reviews: [Review] @hasMany
+  reservations: [Reservation] @hasMany
+  claimedBy: String @index(name: "byOwner") # Allows owners to claim businesses
   createdAt: AWSDateTime
 }
 
@@ -49,6 +57,7 @@ type Review
   rating: Int!
   businessID: ID! @index(name: "byBusiness")
   owner: String
+  helpfulVotes: Int @default(value: "0") # Allows users to "like" helpful reviews
   createdAt: AWSDateTime
 }
 
@@ -65,3 +74,18 @@ type Favorite
   createdAt: AWSDateTime
 }
 
+type Reservation
+  @model
+  @auth(
+    rules: [
+      { allow: owner } # Users can manage their own reservations
+      { allow: private, operations: [create, read] } # Users can create and view reservations
+    ]
+  ) {
+  id: ID!
+  businessID: ID! @index(name: "byBusiness")
+  userID: ID!
+  dateTime: AWSDateTime!
+  status: String @default(value: "pending") # pending, confirmed, canceled
+  createdAt: AWSDateTime
+}

@@ -1,19 +1,19 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-mybackendyelp-dev-ba14a-authRole",
-      "UnauthRoleArn": "arn:aws:iam::509399629973:role/amplify-mybackendyelp-dev-ba14a-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::509399629973:role/amplify-mybackendyelp-dev-ba14a-authRole",
-      "Region": "eu-west-1",
-      "DeploymentBucketName": "amplify-mybackendyelp-dev-ba14a-deployment",
-      "UnauthRoleName": "amplify-mybackendyelp-dev-ba14a-unauthRole",
-      "StackName": "amplify-mybackendyelp-dev-ba14a",
-      "StackId": "arn:aws:cloudformation:eu-west-1:509399629973:stack/amplify-mybackendyelp-dev-ba14a/4ce09520-f437-11ef-911b-02fe2e5c4411",
-      "AmplifyAppId": "d3q7sl1scac7uj"
+      "AuthRoleName": "amplify-mybackendyelp-dev-5d8b0-authRole",
+      "UnauthRoleArn": "arn:aws:iam::509399629973:role/amplify-mybackendyelp-dev-5d8b0-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::509399629973:role/amplify-mybackendyelp-dev-5d8b0-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-mybackendyelp-dev-5d8b0-deployment",
+      "UnauthRoleName": "amplify-mybackendyelp-dev-5d8b0-unauthRole",
+      "StackName": "amplify-mybackendyelp-dev-5d8b0",
+      "StackId": "arn:aws:cloudformation:us-west-2:509399629973:stack/amplify-mybackendyelp-dev-5d8b0/47fd8760-f56e-11ef-9bc7-0290dbba87fb",
+      "AmplifyAppId": "d3btw6ao4jl4vw"
     },
     "categories": {
       "auth": {
-        "mybackendyelpf05f2ee5": {}
+        "mybackendyelpfe082cc0": {}
       },
       "api": {
         "mybackendyelp": {}

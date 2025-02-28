@@ -7,7 +7,7 @@
             "UserPoolId"
           ],
           "category": "auth",
-          "resourceName": "mybackendyelpf05f2ee5"
+          "resourceName": "mybackendyelpfe082cc0"
         }
       ],
       "output": {
@@ -16,15 +16,15 @@
             {
               "authenticationType": "AMAZON_COGNITO_USER_POOLS",
               "userPoolConfig": {
-                "userPoolId": "authmybackendyelpf05f2ee5"
+                "userPoolId": "authmybackendyelpfe082cc0"
               }
             }
           ],
           "defaultAuthentication": {
             "apiKeyConfig": {
-              "apiKeyExpirationDate": "2026-02-27T09:42:11.426Z",
+              "apiKeyExpirationDate": "2026-02-28T01:12:32.441Z",
               "apiKeyExpirationDays": 365,
-              "description": "365"
+              "description": "mybackendyelp"
             },
             "authenticationType": "API_KEY"
           }
@@ -35,7 +35,7 @@
     }
   },
   "auth": {
-    "mybackendyelpf05f2ee5": {
+    "mybackendyelpfe082cc0": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {

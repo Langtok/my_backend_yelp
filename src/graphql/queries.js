@@ -10,26 +10,22 @@ export const getBusiness = /* GraphQL */ `
       address
       latitude
       longitude
+      phoneNumber
+      website
       rating
       images
       reviews {
-        items {
-          id
-          content
-          rating
-          businessID
-          owner
-          createdAt
-          updatedAt
-          userReviewsId
-          businessReviewsId
-          __typename
-        }
         nextToken
         __typename
       }
+      reservations {
+        nextToken
+        __typename
+      }
+      claimedBy
       createdAt
       updatedAt
+      owner
       __typename
     }
   }
@@ -48,26 +44,51 @@ export const listBusinesses = /* GraphQL */ `
         address
         latitude
         longitude
+        phoneNumber
+        website
         rating
         images
-        reviews {
-          items {
-            id
-            content
-            rating
-            businessID
-            owner
-            createdAt
-            updatedAt
-            userReviewsId
-            businessReviewsId
-            __typename
-          }
-          nextToken
-          __typename
-        }
+        claimedBy
         createdAt
         updatedAt
+        owner
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const businessesByClaimedBy = /* GraphQL */ `
+  query BusinessesByClaimedBy(
+    $claimedBy: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelBusinessFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    businessesByClaimedBy(
+      claimedBy: $claimedBy
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        category
+        address
+        latitude
+        longitude
+        phoneNumber
+        website
+        rating
+        images
+        claimedBy
+        createdAt
+        updatedAt
+        owner
         __typename
       }
       nextToken
@@ -82,32 +103,14 @@ export const getUser = /* GraphQL */ `
       username
       email
       reviews {
-        items {
-          id
-          content
-          rating
-          businessID
-          owner
-          createdAt
-          updatedAt
-          userReviewsId
-          businessReviewsId
-          __typename
-        }
         nextToken
         __typename
       }
       favorites {
-        items {
-          id
-          businessID
-          userID
-          createdAt
-          updatedAt
-          userFavoritesId
-          owner
-          __typename
-        }
+        nextToken
+        __typename
+      }
+      reservations {
         nextToken
         __typename
       }
@@ -129,36 +132,6 @@ export const listUsers = /* GraphQL */ `
         id
         username
         email
-        reviews {
-          items {
-            id
-            content
-            rating
-            businessID
-            owner
-            createdAt
-            updatedAt
-            userReviewsId
-            businessReviewsId
-            __typename
-          }
-          nextToken
-          __typename
-        }
-        favorites {
-          items {
-            id
-            businessID
-            userID
-            createdAt
-            updatedAt
-            userFavoritesId
-            owner
-            __typename
-          }
-          nextToken
-          __typename
-        }
         createdAt
         updatedAt
         owner
@@ -177,6 +150,7 @@ export const getReview = /* GraphQL */ `
       rating
       businessID
       owner
+      helpfulVotes
       createdAt
       updatedAt
       userReviewsId
@@ -198,6 +172,7 @@ export const listReviews = /* GraphQL */ `
         rating
         businessID
         owner
+        helpfulVotes
         createdAt
         updatedAt
         userReviewsId
@@ -230,6 +205,7 @@ export const reviewsByBusinessID = /* GraphQL */ `
         rating
         businessID
         owner
+        helpfulVotes
         createdAt
         updatedAt
         userReviewsId
@@ -299,6 +275,81 @@ export const favoritesByBusinessID = /* GraphQL */ `
         createdAt
         updatedAt
         userFavoritesId
+        owner
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const getReservation = /* GraphQL */ `
+  query GetReservation($id: ID!) {
+    getReservation(id: $id) {
+      id
+      businessID
+      userID
+      dateTime
+      status
+      createdAt
+      updatedAt
+      userReservationsId
+      businessReservationsId
+      owner
+      __typename
+    }
+  }
+`;
+export const listReservations = /* GraphQL */ `
+  query ListReservations(
+    $filter: ModelReservationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listReservations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        businessID
+        userID
+        dateTime
+        status
+        createdAt
+        updatedAt
+        userReservationsId
+        businessReservationsId
+        owner
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const reservationsByBusinessID = /* GraphQL */ `
+  query ReservationsByBusinessID(
+    $businessID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelReservationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    reservationsByBusinessID(
+      businessID: $businessID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        businessID
+        userID
+        dateTime
+        status
+        createdAt
+        updatedAt
+        userReservationsId
+        businessReservationsId
         owner
         __typename
       }

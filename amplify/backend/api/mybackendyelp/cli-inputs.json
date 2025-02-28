@@ -6,14 +6,15 @@
     "defaultAuthType": {
       "mode": "API_KEY",
       "expirationTime": 365,
-      "apiKeyExpirationDate": "2026-02-27T09:42:11.426Z",
-      "keyDescription": "365"
+      "apiKeyExpirationDate": "2026-02-28T01:12:32.441Z",
+      "keyDescription": "mybackendyelp"
     },
     "additionalAuthTypes": [
       {
         "mode": "AMAZON_COGNITO_USER_POOLS",
-        "cognitoUserPoolId": "authmybackendyelpf05f2ee5"
+        "cognitoUserPoolId": "authmybackendyelpfe082cc0"
       }
-    ]
+    ],
+    "conflictResolution": {}
   }
 }

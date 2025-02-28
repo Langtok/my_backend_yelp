@@ -11,32 +11,14 @@ export const createUser = /* GraphQL */ `
       username
       email
       reviews {
-        items {
-          id
-          content
-          rating
-          businessID
-          owner
-          createdAt
-          updatedAt
-          userReviewsId
-          businessReviewsId
-          __typename
-        }
         nextToken
         __typename
       }
       favorites {
-        items {
-          id
-          businessID
-          userID
-          createdAt
-          updatedAt
-          userFavoritesId
-          owner
-          __typename
-        }
+        nextToken
+        __typename
+      }
+      reservations {
         nextToken
         __typename
       }
@@ -57,32 +39,14 @@ export const updateUser = /* GraphQL */ `
       username
       email
       reviews {
-        items {
-          id
-          content
-          rating
-          businessID
-          owner
-          createdAt
-          updatedAt
-          userReviewsId
-          businessReviewsId
-          __typename
-        }
         nextToken
         __typename
       }
       favorites {
-        items {
-          id
-          businessID
-          userID
-          createdAt
-          updatedAt
-          userFavoritesId
-          owner
-          __typename
-        }
+        nextToken
+        __typename
+      }
+      reservations {
         nextToken
         __typename
       }
@@ -103,32 +67,14 @@ export const deleteUser = /* GraphQL */ `
       username
       email
       reviews {
-        items {
-          id
-          content
-          rating
-          businessID
-          owner
-          createdAt
-          updatedAt
-          userReviewsId
-          businessReviewsId
-          __typename
-        }
         nextToken
         __typename
       }
       favorites {
-        items {
-          id
-          businessID
-          userID
-          createdAt
-          updatedAt
-          userFavoritesId
-          owner
-          __typename
-        }
+        nextToken
+        __typename
+      }
+      reservations {
         nextToken
         __typename
       }
@@ -151,26 +97,22 @@ export const createBusiness = /* GraphQL */ `
       address
       latitude
       longitude
+      phoneNumber
+      website
       rating
       images
       reviews {
-        items {
-          id
-          content
-          rating
-          businessID
-          owner
-          createdAt
-          updatedAt
-          userReviewsId
-          businessReviewsId
-          __typename
-        }
         nextToken
         __typename
       }
+      reservations {
+        nextToken
+        __typename
+      }
+      claimedBy
       createdAt
       updatedAt
+      owner
       __typename
     }
   }
@@ -187,26 +129,22 @@ export const updateBusiness = /* GraphQL */ `
       address
       latitude
       longitude
+      phoneNumber
+      website
       rating
       images
       reviews {
-        items {
-          id
-          content
-          rating
-          businessID
-          owner
-          createdAt
-          updatedAt
-          userReviewsId
-          businessReviewsId
-          __typename
-        }
         nextToken
         __typename
       }
+      reservations {
+        nextToken
+        __typename
+      }
+      claimedBy
       createdAt
       updatedAt
+      owner
       __typename
     }
   }
@@ -223,26 +161,22 @@ export const deleteBusiness = /* GraphQL */ `
       address
       latitude
       longitude
+      phoneNumber
+      website
       rating
       images
       reviews {
-        items {
-          id
-          content
-          rating
-          businessID
-          owner
-          createdAt
-          updatedAt
-          userReviewsId
-          businessReviewsId
-          __typename
-        }
         nextToken
         __typename
       }
+      reservations {
+        nextToken
+        __typename
+      }
+      claimedBy
       createdAt
       updatedAt
+      owner
       __typename
     }
   }
@@ -258,6 +192,7 @@ export const createReview = /* GraphQL */ `
       rating
       businessID
       owner
+      helpfulVotes
       createdAt
       updatedAt
       userReviewsId
@@ -277,6 +212,7 @@ export const updateReview = /* GraphQL */ `
       rating
       businessID
       owner
+      helpfulVotes
       createdAt
       updatedAt
       userReviewsId
@@ -296,6 +232,7 @@ export const deleteReview = /* GraphQL */ `
       rating
       businessID
       owner
+      helpfulVotes
       createdAt
       updatedAt
       userReviewsId
@@ -350,6 +287,66 @@ export const deleteFavorite = /* GraphQL */ `
       createdAt
       updatedAt
       userFavoritesId
+      owner
+      __typename
+    }
+  }
+`;
+export const createReservation = /* GraphQL */ `
+  mutation CreateReservation(
+    $input: CreateReservationInput!
+    $condition: ModelReservationConditionInput
+  ) {
+    createReservation(input: $input, condition: $condition) {
+      id
+      businessID
+      userID
+      dateTime
+      status
+      createdAt
+      updatedAt
+      userReservationsId
+      businessReservationsId
+      owner
+      __typename
+    }
+  }
+`;
+export const updateReservation = /* GraphQL */ `
+  mutation UpdateReservation(
+    $input: UpdateReservationInput!
+    $condition: ModelReservationConditionInput
+  ) {
+    updateReservation(input: $input, condition: $condition) {
+      id
+      businessID
+      userID
+      dateTime
+      status
+      createdAt
+      updatedAt
+      userReservationsId
+      businessReservationsId
+      owner
+      __typename
+    }
+  }
+`;
+export const deleteReservation = /* GraphQL */ `
+  mutation DeleteReservation(
+    $input: DeleteReservationInput!
+    $condition: ModelReservationConditionInput
+  ) {
+    deleteReservation(input: $input, condition: $condition) {
+      id
+      businessID
+      userID
+      dateTime
+      status
+      createdAt
+      updatedAt
+      userReservationsId
+      businessReservationsId
       owner
       __typename
     }

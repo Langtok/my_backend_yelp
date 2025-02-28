@@ -1,0 +1,16 @@
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .star {
+    font-size: 18px;
+    color: #f4b400;
+  }
+  
+  .ratingText {
+    font-size: 14px;
+    color: #666;
+  }
+  

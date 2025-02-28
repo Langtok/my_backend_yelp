@@ -1,0 +1,16 @@
+.searchPage {
+    padding: 20px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    text-align: center;
+  }
+  
+  /* Mobile Adjustments */
+  @media (max-width: 768px) {
+    h2 {
+      font-size: 20px;
+    }
+  }
+  
