@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { API } from "aws-amplify";
+// import { Auth as _Auth } from "aws-amplify"; 
 import { listReservations } from "../../graphql/queries";
 import styles from "./UserReservations.module.css";
 

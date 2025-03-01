@@ -4,7 +4,7 @@ import { SearchSuggestion } from "../components/Search/SearchSuggestion";
 import { BackgroundSlideshow } from "../components/BackgroundSlider";
 import styles from "./HomePage.module.css";
 
-export function HomePage() {
+export default function HomePage() {
   return (
     <div className={styles.homeContainer}>
       <div className={styles.searchSection}>

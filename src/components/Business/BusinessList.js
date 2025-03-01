@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { API } from "aws-amplify";
+import { Auth as _Auth } from "aws-amplify"; 
 import { listBusinesses } from "../../graphql/queries";
 import { BusinessCard } from "./BusinessCard";
 import styles from "./BusinessList.module.css";

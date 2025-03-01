@@ -4,7 +4,7 @@ import { SearchResultList } from "../components/Search/SearchResultList";
 import { Filters } from "../components/Search/Filters";
 import styles from "./SearchPage.module.css";
 
-export function SearchPage() {
+export default function SearchPage() {
   const { term, location } = useParams();
   const [filters, setFilters] = useState({ category: "", rating: 0 });
 

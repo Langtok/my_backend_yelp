@@ -1,15 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { HomePage } from "./pages/HomePage";
-import { SearchPage } from "./pages/SearchPage";
-import { BusinessPage } from "./pages/BusinessPage";
-import { ReviewPage } from "./pages/ReviewPage";
-import { EditReviewPage } from "./pages/EditReviewPage";
-import { ProfilePage } from "./pages/ProfilePage";
-import { FavoritesPage } from "./pages/FavoritesPage";
-import { ReservationsPage } from "./pages/ReservationsPage";
+import HomePage from "./pages/HomePage";
+import SearchPage from "./pages/SearchPage";
+import BusinessPage from "./pages/BusinessPage";
+import ReviewPage from "./pages/ReviewPage";
+import EditReviewPage from "./pages/EditReviewPage";
+import ProfilePage from "./pages/ProfilePage";
+import FavoritesPage from "./pages/FavoritesPage";
+import ReservationsPage from "./pages/ReservationsPage";
 import { Navigation } from "./components/Navigation";
-import { Footer } from "./components/Footer"; // ✅ Added Footer
+import { Footer } from "./components/Footer";
+import "bulma/css/bulma.css";
 import "./styles/global.css";
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/reservations" element={<ReservationsPage />} />
       </Routes>
-      <Footer /> {/* ✅ Ensure the footer is visible on all pages */}
+      <Footer />
     </Router>
   );
 }

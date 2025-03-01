@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { API } from "aws-amplify";
+// import { Auth as _Auth } from "aws-amplify"; 
 import { listFavorites } from "../../graphql/queries";
 import { SearchResult } from "../Search/SearchResult";
 import styles from "./UserFavorites.module.css";

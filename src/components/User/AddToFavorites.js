@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { API, Auth } from "aws-amplify";
+import { Amplify } from "aws-amplify";
+import { API } from "aws-amplify";
+// import { Auth as _Auth } from "aws-amplify"; 
+import { Auth } from "aws-amplify";
 import { createFavorite, deleteFavorite, listFavorites } from "../../graphql/mutations";
 import styles from "./AddToFavorites.module.css";
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { API } from "aws-amplify";
+import { Auth as _Auth } from "aws-amplify"; 
 import { updateReview } from "../../graphql/mutations";
 import styles from "./HelpfulVote.module.css";
 

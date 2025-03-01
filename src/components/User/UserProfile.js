@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { API, Auth } from "aws-amplify";
+import { Amplify } from "aws-amplify";
+import { API } from "aws-amplify";
+import { Auth as _Auth } from "aws-amplify"; 
 import { getUser } from "../../graphql/queries";
 import { UserReviews } from "./UserReviews";
 import { UserFavorites } from "./UserFavorites";

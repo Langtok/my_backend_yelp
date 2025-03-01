@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { API } from "aws-amplify";
+// import { Auth as _Auth } from "aws-amplify"; 
 import { createReservation } from "../../graphql/mutations";
 import styles from "./BusinessReservation.module.css";
 
+
 export function BusinessReservation({ businessID }) {
   const [dateTime, setDateTime] = useState("");
-  const [status, setStatus] = useState("pending");
+  const [reservationStatus, setReservationStatus] = useState("pending");
 
   async function handleReservation() {
     await API.graphql({
       query: createReservation,
-      variables: { input: { businessID, dateTime, status } },
+      variables: { input: { businessID, dateTime, status: reservationStatus } },
     });
+    
     alert("Reservation submitted!");
   }
 
