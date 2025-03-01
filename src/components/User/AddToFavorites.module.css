@@ -1,15 +1,12 @@
-.favoriteButton {
-    background: #ff4d4d;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    font-size: 14px;
-  }
-  
-  .favoriteButton:hover {
-    background: #cc0000;
-  }
-  
+.addToFavorites {
+  background-color: #d32323;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+}
+
+.addToFavorites:hover {
+  background-color: #a81818;
+}

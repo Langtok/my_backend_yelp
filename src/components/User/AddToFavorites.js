@@ -1,52 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { Amplify } from "aws-amplify";
-import { API } from "aws-amplify";
-// import { Auth as _Auth } from "aws-amplify"; 
-import { Auth } from "aws-amplify";
-import { createFavorite, deleteFavorite, listFavorites } from "../../graphql/mutations";
+import React from "react";
+import { API, Auth } from "aws-amplify";
+import { createFavorite } from "../../graphql/mutations";
 import styles from "./AddToFavorites.module.css";
 
-export function AddToFavorites({ businessID }) {
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [favoriteID, setFavoriteID] = useState(null);
-
-  useEffect(() => {
-    async function checkFavorite() {
-      const user = await Auth.currentAuthenticatedUser();
-      const response = await API.graphql({
-        query: listFavorites,
-        variables: { filter: { userID: { eq: user.username }, businessID: { eq: businessID } } },
-      });
-      if (response.data.listFavorites.items.length > 0) {
-        setIsFavorite(true);
-        setFavoriteID(response.data.listFavorites.items[0].id);
-      }
-    }
-    checkFavorite();
-  }, [businessID]);
-
-  async function toggleFavorite() {
-    const user = await Auth.currentAuthenticatedUser();
-    if (isFavorite) {
+export function AddToFavorites({ businessId }) {
+  async function handleAddFavorite() {
+    try {
+      const authUser = await Auth.currentAuthenticatedUser();
       await API.graphql({
-        query: deleteFavorite,
-        variables: { input: { id: favoriteID } },
-      });
-      setIsFavorite(false);
-      setFavoriteID(null);
-    } else {
-      const response = await API.graphql({
         query: createFavorite,
-        variables: { input: { businessID, userID: user.username } },
+        variables: { input: { userID: authUser.username, businessID: businessId } },
       });
-      setIsFavorite(true);
-      setFavoriteID(response.data.createFavorite.id);
+      alert("Added to favorites!");
+    } catch (error) {
+      console.error("Error adding to favorites:", error);
     }
   }
 
   return (
-    <button onClick={toggleFavorite} className={styles.favoriteButton}>
-      {isFavorite ? "★ Favorited" : "☆ Add to Favorites"}
+    <button onClick={handleAddFavorite} className={styles.addToFavorites}>
+      Add to Favorites
     </button>
   );
 }
