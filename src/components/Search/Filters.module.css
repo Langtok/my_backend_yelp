@@ -1,18 +1,14 @@
-.filterContainer {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-  
-  label {
-    font-weight: bold;
-    color: #333;
-  }
-  
-  select {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
+.filters {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.filters label {
+  font-weight: bold;
+}
+
+.filters select {
+  padding: 5px;
+  margin-left: 10px;
+}

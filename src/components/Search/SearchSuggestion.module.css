@@ -1,0 +1,24 @@
+.suggestions {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .list {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .btn-secondary {
+    background-color: white;
+    color: #d32323;
+    border: 1px solid #d32323;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #f1f1f1;
+  }
+  

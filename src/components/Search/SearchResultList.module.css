@@ -1,7 +1,5 @@
-.resultsContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 20px;
-  }
-  
+.searchResultList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

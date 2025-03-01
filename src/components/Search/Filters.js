@@ -7,19 +7,23 @@ export function Filters({ setFilters }) {
   }
 
   return (
-    <div className={styles.filterContainer}>
+    <div className={styles.filters}>
       <label>Category:</label>
       <select name="category" onChange={handleFilterChange}>
         <option value="">All</option>
-        <option value="Restaurant">Restaurants</option>
-        <option value="Services">Services</option>
+        <option value="restaurant">Restaurants</option>
+        <option value="cafe">Cafes</option>
+        <option value="hotel">Hotels</option>
       </select>
 
-      <label>Rating:</label>
+      <label>Minimum Rating:</label>
       <select name="rating" onChange={handleFilterChange}>
-        <option value="0">All</option>
-        <option value="4">4★ & up</option>
-        <option value="3">3★ & up</option>
+        <option value="0">All Ratings</option>
+        {[1, 2, 3, 4, 5].map((num) => (
+          <option key={num} value={num}>
+            {num} Stars
+          </option>
+        ))}
       </select>
     </div>
   );

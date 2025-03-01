@@ -1,26 +1,20 @@
-.resultCard {
-    display: flex;
-    gap: 15px;
-    padding: 15px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .image {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 8px;
-  }
-  
-  .details h3 {
-    font-size: 18px;
-    margin-bottom: 5px;
-  }
-  
-  .details p {
-    font-size: 14px;
-    color: #666;
-  }
-  
+.searchResult {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+.btn-secondary {
+  background-color: white;
+  color: #d32323;
+  border: 1px solid #d32323;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: #f1f1f1;
+}

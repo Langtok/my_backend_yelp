@@ -1,20 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ItemRating } from "../Common/ItemRating";
+import { Rating } from "../Common/Rating";
 import styles from "./SearchResult.module.css";
 
 export function SearchResult({ business }) {
   return (
-    <div className={styles.resultCard}>
-      <Link to={`/business/${business.id}`}>
-        <img src={business.images[0]} alt={business.name} className={styles.image} />
-      </Link>
-      <div className={styles.details}>
-        <h3>{business.name}</h3>
-        <ItemRating rating={business.rating} />
-        <p>{business.category}</p>
-        <p>{business.address}</p>
-      </div>
+    <div className={styles.searchResult}>
+      <h3>{business.name}</h3>
+      <p>{business.address}</p>
+      <Rating rating={business.rating} />
+      <Link to={`/business/${business.id}`} className="btn-secondary">View Details</Link>
     </div>
   );
 }
