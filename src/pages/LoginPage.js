@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Auth } from "aws-amplify";
+import styles from "./LoginPage.module.css";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -19,13 +20,29 @@ export default function LoginPage() {
   }
 
   return (
-    <div>
+    <div className={styles.loginPage}>
       <h2>Login</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleLogin}>
-        <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required />
-        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        <button type="submit">Login</button>
+      {error && <p className={styles.error}>{error}</p>}
+      <form className={styles.loginForm} onSubmit={handleLogin}>
+        <label>Username:</label>
+        <input
+          type="text"
+          placeholder="Enter your username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+
+        <label>Password:</label>
+        <input
+          type="password"
+          placeholder="Enter your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+
+        <button type="submit" className="btn-primary">Login</button>
       </form>
     </div>
   );

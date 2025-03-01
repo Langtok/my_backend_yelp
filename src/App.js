@@ -15,7 +15,7 @@ import { Footer } from "./components/layout/Footer";
 import "bulma/css/bulma.css";
 import "./styles/global.css";
 
-function App() {
+export default function App() {
   return (
     <Router>
       <Navigation />
@@ -35,5 +35,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;

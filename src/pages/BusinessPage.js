@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { API } from "aws-amplify";
 import { getBusiness } from "../graphql/queries";
+import { BusinessHeader } from "../components/business/BusinessHeader";
+import { BusinessReview } from "../components/business/BusinessReview";
+import { BusinessReservation } from "../components/business/BusinessReservation";
+import styles from "./BusinessPage.module.css";
 
 export default function BusinessPage() {
   const { id } = useParams();
@@ -25,9 +29,10 @@ export default function BusinessPage() {
   if (!business) return <p>Loading...</p>;
 
   return (
-    <div>
-      <h1>{business.name}</h1>
-      <p>{business.address}</p>
+    <div className={styles.businessPage}>
+      <BusinessHeader business={business} />
+      <BusinessReservation businessId={id} />
+      <BusinessReview businessId={id} />
     </div>
   );
 }

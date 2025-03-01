@@ -1,14 +1,20 @@
 .homeContainer {
-    text-align: center;
-    padding: 40px;
-  }
-  
-  .searchSection {
-    margin: 20px 0;
-  }
-  
-  h1 {
-    font-size: 28px;
-    color: #333;
-  }
-  
+  text-align: center;
+  padding: 50px 0;
+}
+
+.searchSection {
+  position: relative;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 30px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: -50px;
+}
+
+.searchSection h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}

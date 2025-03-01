@@ -3,10 +3,10 @@ import styles from "./BackgroundSlider.module.css";
 import bg1 from "../../assets/images/bg-1.jpg";
 import bg2 from "../../assets/images/bg-2.jpg";
 import bg3 from "../../assets/images/bg-3.jpg";
-import bg3 from "../../assets/images/bg-4.jpg";
-import bg3 from "../../assets/images/bg-5.jpg";
-import bg3 from "../../assets/images/bg-6.jpg";
-import bg3 from "../../assets/images/bg-7.jpg";
+import bg4 from "../../assets/images/bg-4.jpg";
+import bg5 from "../../assets/images/bg-5.jpg";
+import bg6 from "../../assets/images/bg-6.jpg";
+import bg7 from "../../assets/images/bg-7.jpg";
 
 const images = [bg1, bg2, bg3, bg4, bg5, bg6, bg7];
 

@@ -1,11 +1,14 @@
 .searchPage {
-    padding: 20px;
-  }
-  
-  h2 {
-    font-size: 24px;
-    text-align: center;
-  }
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.searchPage h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
   
   /* Mobile Adjustments */
   @media (max-width: 768px) {

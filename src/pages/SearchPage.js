@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { SearchResultList } from "../components/Search/SearchResultList";
-import { Filters } from "../components/Search/Filters";
+import { SearchResultList } from "../components/search/SearchResultList";
+import { Filters } from "../components/search/Filters";
 import styles from "./SearchPage.module.css";
 
 export default function SearchPage() {

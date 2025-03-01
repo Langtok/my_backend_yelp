@@ -1,16 +1,17 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import App from "./App";
-import "bulma/css/bulma.css";
 import { Amplify } from "aws-amplify";
-import awsExports from "./aws-exports"; // Ensure this file exists with Amplify configuration
-import "./styles/global.css";
+import awsExports from "./aws-exports";
+import reportWebVitals from "./reportWebVitals";
 
-Amplify.configure({ ...awsExports });
+Amplify.configure(awsExports);
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
+
+reportWebVitals();
