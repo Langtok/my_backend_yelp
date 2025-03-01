@@ -8,8 +8,10 @@ import EditReviewPage from "./pages/EditReviewPage";
 import ProfilePage from "./pages/ProfilePage";
 import FavoritesPage from "./pages/FavoritesPage";
 import ReservationsPage from "./pages/ReservationsPage";
-import { Navigation } from "./components/Navigation";
-import { Footer } from "./components/Footer";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import { Navigation } from "./components/layout/Navigation";
+import { Footer } from "./components/layout/Footer";
 import "bulma/css/bulma.css";
 import "./styles/global.css";
 
@@ -26,6 +28,8 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/reservations" element={<ReservationsPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
       </Routes>
       <Footer />
     </Router>
