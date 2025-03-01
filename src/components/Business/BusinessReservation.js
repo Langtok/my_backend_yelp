@@ -1,35 +1,34 @@
 import React, { useState } from "react";
 import { API } from "aws-amplify";
-// import { Auth as _Auth } from "aws-amplify"; 
 import { createReservation } from "../../graphql/mutations";
 import styles from "./BusinessReservation.module.css";
 
+export function BusinessReservation({ businessId }) {
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
 
-export function BusinessReservation({ businessID }) {
-  const [dateTime, setDateTime] = useState("");
-  const [reservationStatus, setReservationStatus] = useState("pending");
-
-  async function handleReservation() {
-    await API.graphql({
-      query: createReservation,
-      variables: { input: { businessID, dateTime, status: reservationStatus } },
-    });
-    
-    alert("Reservation submitted!");
+  async function handleReservation(e) {
+    e.preventDefault();
+    try {
+      await API.graphql({
+        query: createReservation,
+        variables: { input: { businessId, date, time } },
+      });
+      alert("Reservation successful!");
+    } catch (error) {
+      console.error("Error making reservation:", error);
+    }
   }
 
   return (
-    <div className={styles.reservationSection}>
-      <h2>Make a Reservation</h2>
-      <input
-        type="datetime-local"
-        value={dateTime}
-        onChange={(e) => setDateTime(e.target.value)}
-        className={styles.input}
-      />
-      <button onClick={handleReservation} className={styles.reserveBtn}>
-        Book Now
-      </button>
-    </div>
+    <form className={styles.reservationForm} onSubmit={handleReservation}>
+      <label>Date:</label>
+      <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
+      
+      <label>Time:</label>
+      <input type="time" value={time} onChange={(e) => setTime(e.target.value)} required />
+      
+      <button type="submit" className="btn-primary">Reserve</button>
+    </form>
   );
 }

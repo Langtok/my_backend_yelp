@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { API } from "aws-amplify";
 import { getBusiness } from "../graphql/queries";
 import { createReview } from "../graphql/mutations";
-import { BusinessReview } from "../components/business/BusinessReview";
+import { BusinessReview } from "../components/Business/BusinessReview";
 import styles from "./ReviewPage.module.css";
 
 export default function ReviewPage() {

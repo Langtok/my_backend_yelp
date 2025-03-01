@@ -22,7 +22,7 @@ src
 │   │   ├── BackgroundSlider.js
 │   │   ├── BackgroundSlider.module.css
 │   │
-│   │── business/                # Business-related components
+│   │── Business/                # Business-related components
 │   │   ├── BusinessCard.js
 │   │   ├── BusinessCard.module.css
 │   │   ├── BusinessDetails.js
@@ -36,18 +36,18 @@ src
 │   │   ├── BusinessReview.js
 │   │   ├── BusinessReview.module.css
 │   │
-│   │── common/                   # Reusable elements (buttons, rating, etc.)
+│   │── Common/                   # Reusable elements (buttons, rating, etc.)
 │   │   ├── ItemRating.js
 │   │   ├── Rating.js
 │   │   ├── Rating.module.css
 │   │
-│   │── reviews/                  # Reviews components
+│   │── Reviews/                  # Reviews components
 │   │   ├── HelpfulVote.js
 │   │   ├── HelpfulVote.module.css
 │   │   ├── ReviewCard.js
 │   │   ├── ReviewCard.module.css
 │   │
-│   │── search/                   # Search functionality
+│   │── Search/                   # Search functionality
 │   │   ├── SearchBar.js
 │   │   ├── SearchBar.module.css
 │   │   ├── SearchResult.js

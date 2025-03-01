@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { API } from "aws-amplify";
 import { getBusiness } from "../graphql/queries";
-import { BusinessHeader } from "../components/business/BusinessHeader";
-import { BusinessReview } from "../components/business/BusinessReview";
-import { BusinessReservation } from "../components/business/BusinessReservation";
+import { BusinessHeader } from "../components/Business/BusinessHeader";
+import { BusinessReview } from "../components/Business/BusinessReview";
+import { BusinessReservation } from "../components/Business/BusinessReservation";
 import styles from "./BusinessPage.module.css";
 
 export default function BusinessPage() {

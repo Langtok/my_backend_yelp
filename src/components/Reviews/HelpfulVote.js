@@ -1,24 +1,29 @@
 import React, { useState } from "react";
 import { API } from "aws-amplify";
-import { Auth as _Auth } from "aws-amplify"; 
 import { updateReview } from "../../graphql/mutations";
 import styles from "./HelpfulVote.module.css";
 
-export function HelpfulVote({ review }) {
-  const [helpfulVotes, setHelpfulVotes] = useState(review.helpfulVotes);
+export function HelpfulVote({ reviewId, votes }) {
+  const [helpfulVotes, setHelpfulVotes] = useState(votes);
 
   async function handleVote() {
-    const newVotes = helpfulVotes + 1;
-    await API.graphql({
-      query: updateReview,
-      variables: { input: { id: review.id, helpfulVotes: newVotes } },
-    });
-    setHelpfulVotes(newVotes);
+    try {
+      const updatedVotes = helpfulVotes + 1;
+      await API.graphql({
+        query: updateReview,
+        variables: { input: { id: reviewId, helpfulVotes: updatedVotes } },
+      });
+      setHelpfulVotes(updatedVotes);
+    } catch (error) {
+      console.error("Error updating votes:", error);
+    }
   }
 
   return (
-    <button onClick={handleVote} className={styles.voteButton}>
-      👍 Helpful ({helpfulVotes})
-    </button>
+    <div className={styles.helpfulVote}>
+      <button onClick={handleVote} className="btn-secondary">
+        Helpful ({helpfulVotes})
+      </button>
+    </div>
   );
 }
