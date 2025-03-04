@@ -9,8 +9,8 @@ export function SearchBar() {
 
   function handleSearch(e) {
     e.preventDefault();
-    if (term && location) {
-      navigate(`/search/${term}/${location}`);
+    if (term.trim() && location.trim()) {
+      navigate(`/search/${encodeURIComponent(term)}/${encodeURIComponent(location)}`);
     }
   }
 
@@ -21,6 +21,8 @@ export function SearchBar() {
         placeholder="Search for businesses..."
         value={term}
         onChange={(e) => setTerm(e.target.value)}
+        onKeyPress={(e) => e.key === "Enter" && handleSearch(e)}
+        aria-label="Search for businesses"
         required
       />
       <input
@@ -28,6 +30,8 @@ export function SearchBar() {
         placeholder="Enter location..."
         value={location}
         onChange={(e) => setLocation(e.target.value)}
+        onKeyPress={(e) => e.key === "Enter" && handleSearch(e)}
+        aria-label="Enter location"
         required
       />
       <button type="submit" className="btn-primary">Search</button>

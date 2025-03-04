@@ -1,8 +1,11 @@
 .searchBar {
   display: flex;
-  justify-content: center;
   gap: 10px;
-  margin-top: 20px;
+  justify-content: center;
+  padding: 15px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .searchBar input {
@@ -10,6 +13,7 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
+  flex: 1;
 }
 
 .btn-primary {

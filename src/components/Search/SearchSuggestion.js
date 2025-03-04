@@ -2,12 +2,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./SearchSuggestion.module.css";
 
-export function SearchSuggestion() {
+export function SearchSuggestion({ defaultLocation = "New York" }) {
   const navigate = useNavigate();
   const suggestions = ["Restaurants", "Coffee Shops", "Hotels", "Bars", "Gyms"];
 
   function handleClick(suggestion) {
-    navigate(`/search/${suggestion}/New York`);
+    navigate(`/search/${encodeURIComponent(suggestion)}/${encodeURIComponent(defaultLocation)}`);
   }
 
   return (
@@ -15,7 +15,12 @@ export function SearchSuggestion() {
       <h3>Popular Searches</h3>
       <div className={styles.list}>
         {suggestions.map((item) => (
-          <button key={item} onClick={() => handleClick(item)} className="btn-secondary">
+          <button 
+            key={item} 
+            onClick={() => handleClick(item)} 
+            className={styles.suggestionButton} 
+            aria-label={`Search for ${item} in ${defaultLocation}`}
+          >
             {item}
           </button>
         ))}

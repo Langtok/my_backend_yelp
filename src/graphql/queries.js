@@ -1,5 +1,5 @@
 /* eslint-disable */
-// this is an auto generated file. This will be overwritten
+// This is an auto-generated file. This will be overwritten.
 
 export const getBusiness = /* GraphQL */ `
   query GetBusiness($id: ID!) {
@@ -8,28 +8,17 @@ export const getBusiness = /* GraphQL */ `
       name
       category
       address
-      latitude
-      longitude
       phoneNumber
       website
       rating
       images
-      reviews {
-        nextToken
-        __typename
-      }
-      reservations {
-        nextToken
-        __typename
-      }
-      claimedBy
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
+
 export const listBusinesses = /* GraphQL */ `
   query ListBusinesses(
     $filter: ModelBusinessFilterInput
@@ -42,85 +31,31 @@ export const listBusinesses = /* GraphQL */ `
         name
         category
         address
-        latitude
-        longitude
         phoneNumber
         website
         rating
         images
-        claimedBy
         createdAt
         updatedAt
         owner
-        __typename
       }
       nextToken
-      __typename
     }
   }
 `;
-export const businessesByClaimedBy = /* GraphQL */ `
-  query BusinessesByClaimedBy(
-    $claimedBy: String!
-    $sortDirection: ModelSortDirection
-    $filter: ModelBusinessFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    businessesByClaimedBy(
-      claimedBy: $claimedBy
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        name
-        category
-        address
-        latitude
-        longitude
-        phoneNumber
-        website
-        rating
-        images
-        claimedBy
-        createdAt
-        updatedAt
-        owner
-        __typename
-      }
-      nextToken
-      __typename
-    }
-  }
-`;
+
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
       id
       username
       email
-      reviews {
-        nextToken
-        __typename
-      }
-      favorites {
-        nextToken
-        __typename
-      }
-      reservations {
-        nextToken
-        __typename
-      }
       createdAt
       updatedAt
-      owner
-      __typename
     }
   }
 `;
+
 export const listUsers = /* GraphQL */ `
   query ListUsers(
     $filter: ModelUserFilterInput
@@ -134,14 +69,12 @@ export const listUsers = /* GraphQL */ `
         email
         createdAt
         updatedAt
-        owner
-        __typename
       }
       nextToken
-      __typename
     }
   }
 `;
+
 export const getReview = /* GraphQL */ `
   query GetReview($id: ID!) {
     getReview(id: $id) {
@@ -153,12 +86,10 @@ export const getReview = /* GraphQL */ `
       helpfulVotes
       createdAt
       updatedAt
-      userReviewsId
-      businessReviewsId
-      __typename
     }
   }
 `;
+
 export const listReviews = /* GraphQL */ `
   query ListReviews(
     $filter: ModelReviewFilterInput
@@ -175,48 +106,12 @@ export const listReviews = /* GraphQL */ `
         helpfulVotes
         createdAt
         updatedAt
-        userReviewsId
-        businessReviewsId
-        __typename
       }
       nextToken
-      __typename
     }
   }
 `;
-export const reviewsByBusinessID = /* GraphQL */ `
-  query ReviewsByBusinessID(
-    $businessID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelReviewFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    reviewsByBusinessID(
-      businessID: $businessID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        content
-        rating
-        businessID
-        owner
-        helpfulVotes
-        createdAt
-        updatedAt
-        userReviewsId
-        businessReviewsId
-        __typename
-      }
-      nextToken
-      __typename
-    }
-  }
-`;
+
 export const getFavorite = /* GraphQL */ `
   query GetFavorite($id: ID!) {
     getFavorite(id: $id) {
@@ -225,12 +120,10 @@ export const getFavorite = /* GraphQL */ `
       userID
       createdAt
       updatedAt
-      userFavoritesId
-      owner
-      __typename
     }
   }
 `;
+
 export const listFavorites = /* GraphQL */ `
   query ListFavorites(
     $filter: ModelFavoriteFilterInput
@@ -244,45 +137,12 @@ export const listFavorites = /* GraphQL */ `
         userID
         createdAt
         updatedAt
-        userFavoritesId
-        owner
-        __typename
       }
       nextToken
-      __typename
     }
   }
 `;
-export const favoritesByBusinessID = /* GraphQL */ `
-  query FavoritesByBusinessID(
-    $businessID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelFavoriteFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    favoritesByBusinessID(
-      businessID: $businessID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        businessID
-        userID
-        createdAt
-        updatedAt
-        userFavoritesId
-        owner
-        __typename
-      }
-      nextToken
-      __typename
-    }
-  }
-`;
+
 export const getReservation = /* GraphQL */ `
   query GetReservation($id: ID!) {
     getReservation(id: $id) {
@@ -293,13 +153,10 @@ export const getReservation = /* GraphQL */ `
       status
       createdAt
       updatedAt
-      userReservationsId
-      businessReservationsId
-      owner
-      __typename
     }
   }
 `;
+
 export const listReservations = /* GraphQL */ `
   query ListReservations(
     $filter: ModelReservationFilterInput
@@ -315,26 +172,22 @@ export const listReservations = /* GraphQL */ `
         status
         createdAt
         updatedAt
-        userReservationsId
-        businessReservationsId
-        owner
-        __typename
       }
       nextToken
-      __typename
     }
   }
 `;
-export const reservationsByBusinessID = /* GraphQL */ `
-  query ReservationsByBusinessID(
-    $businessID: ID!
+
+export const userByUsername = /* GraphQL */ `
+  query UserByUsername(
+    $username: String!
     $sortDirection: ModelSortDirection
-    $filter: ModelReservationFilterInput
+    $filter: ModelUserFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    reservationsByBusinessID(
-      businessID: $businessID
+    userByUsername(
+      username: $username
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -342,19 +195,12 @@ export const reservationsByBusinessID = /* GraphQL */ `
     ) {
       items {
         id
-        businessID
-        userID
-        dateTime
-        status
+        username
+        email
         createdAt
         updatedAt
-        userReservationsId
-        businessReservationsId
-        owner
-        __typename
       }
       nextToken
-      __typename
     }
   }
 `;

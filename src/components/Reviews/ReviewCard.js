@@ -6,10 +6,11 @@ import styles from "./ReviewCard.module.css";
 export function ReviewCard({ review }) {
   return (
     <div className={styles.reviewCard}>
-      <h3>{review.user.name}</h3>
+      <h3>{review.user?.name || "Anonymous"}</h3>
+      <p className={styles.date}>{new Date(review.createdAt).toLocaleDateString()}</p>
       <Rating rating={review.rating} />
-      <p>{review.content}</p>
-      <HelpfulVote reviewId={review.id} votes={review.helpfulVotes} />
+      <p className={styles.content}>{review.content}</p>
+      <HelpfulVote reviewId={review.id} votes={review.helpfulVotes ?? 0} />
     </div>
   );
 }

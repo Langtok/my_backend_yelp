@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Auth } from "aws-amplify";
+import { Auth, Hub } from "aws-amplify";
 import styles from "./Navigation.module.css";
 
 export function Navigation() {
   const [user, setUser] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,7 +17,17 @@ export function Navigation() {
         setUser(null);
       }
     }
+
     checkUser();
+
+    // Listen for auth state changes
+    const unsubscribe = Hub.listen("auth", ({ payload }) => {
+      if (payload.event === "signIn" || payload.event === "signOut") {
+        checkUser();
+      }
+    });
+
+    return () => unsubscribe();
   }, []);
 
   async function handleSignOut() {
@@ -34,12 +45,19 @@ export function Navigation() {
       <div className={styles.logo}>
         <Link to="/">YelpClone</Link>
       </div>
-      <div className={styles.navLinks}>
+
+      {/* Mobile Menu Toggle */}
+      <button className={styles.menuToggle} onClick={() => setMenuOpen(!menuOpen)}>
+        ☰
+      </button>
+
+      <div className={`${styles.navLinks} ${menuOpen ? styles.open : ""}`}>
         <Link to="/search">Search</Link>
         <Link to="/favorites">Favorites</Link>
         <Link to="/reservations">Reservations</Link>
         {user && <Link to="/profile">Profile</Link>}
       </div>
+
       <div className={styles.authButtons}>
         {user ? (
           <button className={styles.logoutBtn} onClick={handleSignOut}>

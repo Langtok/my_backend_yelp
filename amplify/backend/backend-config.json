@@ -1,41 +1,6 @@
 {
-  "api": {
-    "mybackendyelp": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "mybackendyelpfe082cc0"
-        }
-      ],
-      "output": {
-        "authConfig": {
-          "additionalAuthenticationProviders": [
-            {
-              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-              "userPoolConfig": {
-                "userPoolId": "authmybackendyelpfe082cc0"
-              }
-            }
-          ],
-          "defaultAuthentication": {
-            "apiKeyConfig": {
-              "apiKeyExpirationDate": "2026-02-28T01:12:32.441Z",
-              "apiKeyExpirationDays": 365,
-              "description": "mybackendyelp"
-            },
-            "authenticationType": "API_KEY"
-          }
-        }
-      },
-      "providerPlugin": "awscloudformation",
-      "service": "AppSync"
-    }
-  },
   "auth": {
-    "mybackendyelpfe082cc0": {
+    "mybackendyelp975d5e17": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -60,6 +25,13 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "storage": {
+    "resources": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
     }
   }
 }

@@ -3,14 +3,19 @@
 }
 
 .btn-secondary {
-  background-color: white;
-  color: #d32323;
-  border: 1px solid #d32323;
-  padding: 8px 12px;
+  background-color: #555;
+  color: white;
+  padding: 8px 15px;
   border-radius: 5px;
   cursor: pointer;
+  border: none;
 }
 
 .btn-secondary:hover {
-  background-color: #f1f1f1;
+  background-color: #333;
+}
+
+.btn-secondary:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
 }

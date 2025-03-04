@@ -1,12 +1,8 @@
 .reviewPage {
-  padding: 40px 20px;
-  max-width: 800px;
+  max-width: 600px;
   margin: 0 auto;
-}
-
-.reviewPage h1 {
+  padding: 20px;
   text-align: center;
-  margin-bottom: 20px;
 }
 
 .reviewForm {
@@ -20,15 +16,17 @@
   width: 100%;
   height: 100px;
   padding: 10px;
-  border-radius: 5px;
   border: 1px solid #ccc;
+  border-radius: 5px;
   font-size: 16px;
 }
 
 .reviewForm select {
-  display: block;
-  margin: 10px 0;
-  padding: 5px;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   font-size: 16px;
 }
 
@@ -39,8 +37,14 @@
   border-radius: 5px;
   cursor: pointer;
   border: none;
+  margin-top: 15px;
 }
 
 .btn-primary:hover {
   background-color: #a81818;
+}
+
+.error {
+  color: red;
+  font-size: 16px;
 }

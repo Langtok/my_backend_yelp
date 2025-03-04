@@ -5,11 +5,16 @@ import styles from "./BusinessCard.module.css";
 export function BusinessCard({ business }) {
   return (
     <div className={styles.businessCard}>
-      <img src={business.imageUrl || "/assets/logo.png"} alt={business.name} className={styles.image} />
+      <img 
+        src={business.imageUrl || "/assets/logo.png"} 
+        alt={business.name} 
+        className={styles.image} 
+        onError={(e) => { e.target.src = "/assets/logo.png"; }} // ✅ Fallback for broken images
+      />
       <div className={styles.info}>
         <h3>{business.name}</h3>
-        <p>{business.address}</p>
-        <p>⭐ {business.rating} ({business.reviewCount} reviews)</p>
+        <p>{business.address || "No address provided"}</p>
+        <p>⭐ {business.rating ?? "N/A"} ({business.reviewCount ?? 0} reviews)</p>
         <Link to={`/business/${business.id}`} className="btn-primary">View Details</Link>
       </div>
     </div>

@@ -9,14 +9,17 @@
     font-size: 18px;
   }
   
+  
   .ratingWrapper {
     display: flex;
     align-items: center;
+    gap: 5px;
   }
   
   .ratingText {
-    font-size: 14px;
-    margin-left: 5px;
-    color: #444;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
   }
+  
   

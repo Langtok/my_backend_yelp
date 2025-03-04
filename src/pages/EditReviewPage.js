@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { API } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import { getReview } from "../graphql/queries";
 import { updateReview } from "../graphql/mutations";
 import styles from "./EditReviewPage.module.css";
@@ -9,17 +9,23 @@ export default function EditReviewPage() {
   const { reviewID } = useParams();
   const navigate = useNavigate();
   const [review, setReview] = useState({ content: "", rating: 0 });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function fetchReview() {
       try {
-        const data = await API.graphql({
-          query: getReview,
-          variables: { id: reviewID },
-        });
-        setReview(data.data.getReview);
+        const response = await API.graphql(graphqlOperation(getReview, { id: reviewID }));
+        if (response.data.getReview) {
+          setReview(response.data.getReview);
+        } else {
+          setError("Review not found.");
+        }
       } catch (error) {
         console.error("Error fetching review:", error);
+        setError("Failed to load review.");
+      } finally {
+        setLoading(false);
       }
     }
     fetchReview();
@@ -28,16 +34,17 @@ export default function EditReviewPage() {
   async function handleUpdate(e) {
     e.preventDefault();
     try {
-      await API.graphql({
-        query: updateReview,
-        variables: { input: { id: reviewID, ...review } },
-      });
+      await API.graphql(graphqlOperation(updateReview, { input: { id: reviewID, ...review } }));
       alert("Review updated successfully!");
       navigate(`/review/${reviewID}`);
     } catch (error) {
       console.error("Error updating review:", error);
+      setError("Failed to update review.");
     }
   }
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p className={styles.error}>{error}</p>;
 
   return (
     <div className={styles.editReviewPage}>

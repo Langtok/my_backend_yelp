@@ -4,18 +4,31 @@ import { Auth } from "aws-amplify";
 import styles from "./LoginPage.module.css";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   async function handleLogin(event) {
     event.preventDefault();
+    setError(null);
+    setLoading(true);
+
     try {
-      await Auth.signIn(username, password);
+      const user = await Auth.signIn(email, password);
+      console.log("User logged in:", user);
       navigate("/profile");
     } catch (err) {
-      setError(err.message);
+      console.error("Login error:", err);
+      if (err.code === "UserNotConfirmedException") {
+        await Auth.resendSignUp(email);
+        navigate(`/confirm-signup?email=${email}`);
+      } else {
+        setError(err.message);
+      }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -24,12 +37,12 @@ export default function LoginPage() {
       <h2>Login</h2>
       {error && <p className={styles.error}>{error}</p>}
       <form className={styles.loginForm} onSubmit={handleLogin}>
-        <label>Username:</label>
+        <label>Email:</label>
         <input
-          type="text"
-          placeholder="Enter your username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
 
@@ -42,7 +55,9 @@ export default function LoginPage() {
           required
         />
 
-        <button type="submit" className="btn-primary">Login</button>
+        <button type="submit" className="btn-primary" disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
+        </button>
       </form>
     </div>
   );

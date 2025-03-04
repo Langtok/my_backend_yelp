@@ -3,21 +3,25 @@ import styles from "./Filters.module.css";
 
 export function Filters({ setFilters }) {
   function handleFilterChange(e) {
-    setFilters((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setFilters((prev) => ({
+      ...prev,
+      [name]: name === "rating" ? parseFloat(value) : value,
+    }));
   }
 
   return (
     <div className={styles.filters}>
-      <label>Category:</label>
-      <select name="category" onChange={handleFilterChange}>
+      <label htmlFor="category">Category:</label>
+      <select name="category" id="category" onChange={handleFilterChange}>
         <option value="">All</option>
         <option value="restaurant">Restaurants</option>
         <option value="cafe">Cafes</option>
         <option value="hotel">Hotels</option>
       </select>
 
-      <label>Minimum Rating:</label>
-      <select name="rating" onChange={handleFilterChange}>
+      <label htmlFor="rating">Minimum Rating:</label>
+      <select name="rating" id="rating" onChange={handleFilterChange}>
         <option value="0">All Ratings</option>
         {[1, 2, 3, 4, 5].map((num) => (
           <option key={num} value={num}>

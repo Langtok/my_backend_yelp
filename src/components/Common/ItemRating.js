@@ -1,10 +1,11 @@
 import React from "react";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
-import styles from "./Rating.module.css";
+import styles from "./ItemRating.module.css";
 
-export function ItemRating({ rating }) {
-  const fullStars = Math.floor(rating);
-  const hasHalfStar = rating % 1 !== 0;
+export function ItemRating({ rating = 0 }) {
+  const numericRating = Number(rating);
+  const fullStars = Math.floor(numericRating);
+  const hasHalfStar = numericRating % 1 !== 0 && numericRating < 5;
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
 
   return (

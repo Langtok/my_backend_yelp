@@ -1,10 +1,10 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "mybackendyelpfe082cc0_identitypool_fe082cc0",
-    "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "mybackfe082cc0",
-    "userPoolName": "mybackendyelpfe082cc0_userpool_fe082cc0",
+    "identityPoolName": "mybackendyelp975d5e17_identitypool_975d5e17",
+    "allowUnauthenticatedIdentities": true,
+    "resourceNameTruncated": "myback975d5e17",
+    "userPoolName": "mybackendyelp975d5e17_userpool_975d5e17",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -31,10 +31,10 @@
     "userpoolClientReadAttributes": [
       "email"
     ],
-    "userpoolClientLambdaRole": "mybackfe082cc0_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "myback975d5e17_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "fe082cc0",
-    "resourceName": "mybackendyelpfe082cc0",
+    "sharedId": "975d5e17",
+    "resourceName": "mybackendyelp975d5e17",
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "default",
     "usernameAttributes": [
@@ -43,6 +43,20 @@
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
-    "useEnabledMfas": true
+    "useEnabledMfas": true,
+    "authRoleArn": {
+      "Fn::GetAtt": [
+        "AuthRole",
+        "Arn"
+      ]
+    },
+    "unauthRoleArn": {
+      "Fn::GetAtt": [
+        "UnauthRole",
+        "Arn"
+      ]
+    },
+    "breakCircularDependency": true,
+    "dependsOn": []
   }
 }
