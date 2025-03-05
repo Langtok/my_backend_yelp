@@ -1,48 +1,5 @@
 /* eslint-disable */
-// This is an auto-generated file. This will be overwritten.
-
-export const getBusiness = /* GraphQL */ `
-  query GetBusiness($id: ID!) {
-    getBusiness(id: $id) {
-      id
-      name
-      category
-      address
-      phoneNumber
-      website
-      rating
-      images
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-
-export const listBusinesses = /* GraphQL */ `
-  query ListBusinesses(
-    $filter: ModelBusinessFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listBusinesses(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        category
-        address
-        phoneNumber
-        website
-        rating
-        images
-        createdAt
-        updatedAt
-        owner
-      }
-      nextToken
-    }
-  }
-`;
+// this is an auto generated file. This will be overwritten
 
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
@@ -50,12 +7,15 @@ export const getUser = /* GraphQL */ `
       id
       username
       email
+      name
+      phoneNumber
       createdAt
       updatedAt
+      owner
+      __typename
     }
   }
 `;
-
 export const listUsers = /* GraphQL */ `
   query ListUsers(
     $filter: ModelUserFilterInput
@@ -67,51 +27,18 @@ export const listUsers = /* GraphQL */ `
         id
         username
         email
+        name
+        phoneNumber
         createdAt
         updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-
-export const getReview = /* GraphQL */ `
-  query GetReview($id: ID!) {
-    getReview(id: $id) {
-      id
-      content
-      rating
-      businessID
-      owner
-      helpfulVotes
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
-export const listReviews = /* GraphQL */ `
-  query ListReviews(
-    $filter: ModelReviewFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listReviews(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        content
-        rating
-        businessID
         owner
-        helpfulVotes
-        createdAt
-        updatedAt
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
-
 export const getFavorite = /* GraphQL */ `
   query GetFavorite($id: ID!) {
     getFavorite(id: $id) {
@@ -120,10 +47,11 @@ export const getFavorite = /* GraphQL */ `
       userID
       createdAt
       updatedAt
+      owner
+      __typename
     }
   }
 `;
-
 export const listFavorites = /* GraphQL */ `
   query ListFavorites(
     $filter: ModelFavoriteFilterInput
@@ -137,12 +65,14 @@ export const listFavorites = /* GraphQL */ `
         userID
         createdAt
         updatedAt
+        owner
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
-
 export const getReservation = /* GraphQL */ `
   query GetReservation($id: ID!) {
     getReservation(id: $id) {
@@ -153,10 +83,11 @@ export const getReservation = /* GraphQL */ `
       status
       createdAt
       updatedAt
+      owner
+      __typename
     }
   }
 `;
-
 export const listReservations = /* GraphQL */ `
   query ListReservations(
     $filter: ModelReservationFilterInput
@@ -172,22 +103,26 @@ export const listReservations = /* GraphQL */ `
         status
         createdAt
         updatedAt
+        owner
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
-
-export const userByUsername = /* GraphQL */ `
-  query UserByUsername(
-    $username: String!
+export const favoritesByBusinessIDAndCreatedAt = /* GraphQL */ `
+  query FavoritesByBusinessIDAndCreatedAt(
+    $businessID: ID!
+    $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
-    $filter: ModelUserFilterInput
+    $filter: ModelFavoriteFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    userByUsername(
-      username: $username
+    favoritesByBusinessIDAndCreatedAt(
+      businessID: $businessID
+      createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -195,12 +130,258 @@ export const userByUsername = /* GraphQL */ `
     ) {
       items {
         id
-        username
-        email
+        businessID
+        userID
         createdAt
         updatedAt
+        owner
+        __typename
       }
       nextToken
+      __typename
+    }
+  }
+`;
+export const favoritesByUserIDAndCreatedAt = /* GraphQL */ `
+  query FavoritesByUserIDAndCreatedAt(
+    $userID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelFavoriteFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    favoritesByUserIDAndCreatedAt(
+      userID: $userID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        businessID
+        userID
+        createdAt
+        updatedAt
+        owner
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const reservationsByBusinessIDAndCreatedAt = /* GraphQL */ `
+  query ReservationsByBusinessIDAndCreatedAt(
+    $businessID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelReservationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    reservationsByBusinessIDAndCreatedAt(
+      businessID: $businessID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        businessID
+        userID
+        dateTime
+        status
+        createdAt
+        updatedAt
+        owner
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const reservationsByUserIDAndCreatedAt = /* GraphQL */ `
+  query ReservationsByUserIDAndCreatedAt(
+    $userID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelReservationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    reservationsByUserIDAndCreatedAt(
+      userID: $userID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        businessID
+        userID
+        dateTime
+        status
+        createdAt
+        updatedAt
+        owner
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const getBusiness = /* GraphQL */ `
+  query GetBusiness($id: ID!) {
+    getBusiness(id: $id) {
+      id
+      name
+      category
+      address
+      phoneNumber
+      website
+      rating
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+  }
+`;
+export const listBusinesses = /* GraphQL */ `
+  query ListBusinesses(
+    $filter: ModelBusinessFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listBusinesses(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        category
+        address
+        phoneNumber
+        website
+        rating
+        createdAt
+        updatedAt
+        owner
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const getReview = /* GraphQL */ `
+  query GetReview($id: ID!) {
+    getReview(id: $id) {
+      id
+      content
+      rating
+      businessID
+      userID
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+  }
+`;
+export const listReviews = /* GraphQL */ `
+  query ListReviews(
+    $filter: ModelReviewFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listReviews(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        content
+        rating
+        businessID
+        userID
+        createdAt
+        updatedAt
+        owner
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const reviewsByBusinessIDAndCreatedAt = /* GraphQL */ `
+  query ReviewsByBusinessIDAndCreatedAt(
+    $businessID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelReviewFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    reviewsByBusinessIDAndCreatedAt(
+      businessID: $businessID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        content
+        rating
+        businessID
+        userID
+        createdAt
+        updatedAt
+        owner
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const reviewsByUserIDAndCreatedAt = /* GraphQL */ `
+  query ReviewsByUserIDAndCreatedAt(
+    $userID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelReviewFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    reviewsByUserIDAndCreatedAt(
+      userID: $userID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        content
+        rating
+        businessID
+        userID
+        createdAt
+        updatedAt
+        owner
+        __typename
+      }
+      nextToken
+      __typename
     }
   }
 `;

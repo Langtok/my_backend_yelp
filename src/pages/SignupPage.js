@@ -15,6 +15,25 @@ export default function SignupPage() {
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
 
+  // Format phone number for AWS Cognito (e.g., "+1234567890")
+  function formatPhoneNumber(phone) {
+    let cleaned = phone.replace(/\D/g, ""); // Remove non-numeric characters
+    if (!cleaned.startsWith("+")) {
+      cleaned = "+1" + cleaned; // Default to US (+1) if no country code
+    }
+    return cleaned;
+  }
+
+  function isPasswordValid(password) {
+    return (
+      password.length >= 8 &&
+      /[A-Z]/.test(password) && // At least one uppercase letter
+      /[a-z]/.test(password) && // At least one lowercase letter
+      /\d/.test(password) && // At least one number
+      /[^A-Za-z0-9]/.test(password) // At least one special character
+    );
+  }
+
   async function handleSignup(event) {
     event.preventDefault();
     setError("");
@@ -25,6 +44,17 @@ export default function SignupPage() {
       return;
     }
 
+    if (!isPasswordValid(password)) {
+      setError("Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.");
+      return;
+    }
+
+    const formattedPhone = formatPhoneNumber(phoneNumber);
+    if (!/^\+\d{10,15}$/.test(formattedPhone)) {
+      setError("Phone number must be in international format (e.g., +1234567890).");
+      return;
+    }
+
     try {
       await Auth.signUp({
         username: email,
@@ -32,7 +62,7 @@ export default function SignupPage() {
         attributes: {
           name,
           email,
-          phone_number: phoneNumber,
+          phone_number: formattedPhone,
         },
       });
       setStep(2);
@@ -49,8 +79,8 @@ export default function SignupPage() {
 
     try {
       await Auth.confirmSignUp(email, confirmationCode);
-      setMessage("Signup successful! Redirecting to login...");
-      setTimeout(() => navigate("/login"), 2000);
+      setMessage("✅ Signup successful! Redirecting to login...");
+      setTimeout(() => navigate("/login"), 3000); // Redirect after 3 seconds
     } catch (err) {
       setError(err.message);
     }
@@ -90,6 +120,14 @@ export default function SignupPage() {
             onChange={(e) => setPhoneNumber(e.target.value)}
             required
           />
+          <small className={styles.phoneInfo}>
+            <span role="img" aria-label="info">ℹ️</span> Phone number must be in international format:
+            <ul>
+              <li><span role="img" aria-label="check">✅</span> Must start with `+` (e.g., +1234567890)</li>
+              <li><span role="img" aria-label="check">✅</span> 10-15 digits</li>
+              <li><span role="img" aria-label="check">✅</span> No spaces or special characters (except `+`)</li>
+            </ul>
+          </small>
 
           <label>Password:</label>
           <input
@@ -99,6 +137,16 @@ export default function SignupPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          <small className={styles.passwordInfo}>
+            <span role="img" aria-label="info">ℹ️</span> Password must include:
+            <ul>
+              <li><span role="img" aria-label="check">✅</span> At least 8 characters</li>
+              <li><span role="img" aria-label="check">✅</span> One uppercase letter (A-Z)</li>
+              <li><span role="img" aria-label="check">✅</span> One lowercase letter (a-z)</li>
+              <li><span role="img" aria-label="check">✅</span> One number (0-9)</li>
+              <li><span role="img" aria-label="check">✅</span> One special character (@$!%*?&)</li>
+            </ul>
+          </small>
 
           <label>Confirm Password:</label>
           <input

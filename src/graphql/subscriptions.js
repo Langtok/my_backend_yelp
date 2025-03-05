@@ -1,155 +1,104 @@
 /* eslint-disable */
-// This is an auto-generated file. This will be overwritten.
-
-export const onCreateBusiness = /* GraphQL */ `
-  subscription OnCreateBusiness {
-    onCreateBusiness {
-      id
-      name
-      category
-      address
-      phoneNumber
-      website
-      rating
-      images
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-
-export const onUpdateBusiness = /* GraphQL */ `
-  subscription OnUpdateBusiness {
-    onUpdateBusiness {
-      id
-      name
-      category
-      address
-      phoneNumber
-      website
-      rating
-      images
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-
-export const onDeleteBusiness = /* GraphQL */ `
-  subscription OnDeleteBusiness {
-    onDeleteBusiness {
-      id
-    }
-  }
-`;
+// this is an auto generated file. This will be overwritten
 
 export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser {
-    onCreateUser {
+  subscription OnCreateUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onCreateUser(filter: $filter, owner: $owner) {
       id
       username
       email
+      name
+      phoneNumber
       createdAt
       updatedAt
+      owner
+      __typename
     }
   }
 `;
-
 export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser {
-    onUpdateUser {
+  subscription OnUpdateUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onUpdateUser(filter: $filter, owner: $owner) {
       id
       username
       email
+      name
+      phoneNumber
       createdAt
       updatedAt
+      owner
+      __typename
     }
   }
 `;
-
 export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser {
-    onDeleteUser {
+  subscription OnDeleteUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onDeleteUser(filter: $filter, owner: $owner) {
       id
-    }
-  }
-`;
-
-export const onCreateReview = /* GraphQL */ `
-  subscription OnCreateReview {
-    onCreateReview {
-      id
-      content
-      rating
-      businessID
-      owner
-      helpfulVotes
+      username
+      email
+      name
+      phoneNumber
       createdAt
       updatedAt
-    }
-  }
-`;
-
-export const onUpdateReview = /* GraphQL */ `
-  subscription OnUpdateReview {
-    onUpdateReview {
-      id
-      content
-      rating
-      businessID
       owner
-      helpfulVotes
-      createdAt
-      updatedAt
+      __typename
     }
   }
 `;
-
-export const onDeleteReview = /* GraphQL */ `
-  subscription OnDeleteReview {
-    onDeleteReview {
-      id
-    }
-  }
-`;
-
 export const onCreateFavorite = /* GraphQL */ `
-  subscription OnCreateFavorite {
-    onCreateFavorite {
+  subscription OnCreateFavorite($filter: ModelSubscriptionFavoriteFilterInput) {
+    onCreateFavorite(filter: $filter) {
       id
       businessID
       userID
       createdAt
       updatedAt
+      owner
+      __typename
     }
   }
 `;
-
 export const onUpdateFavorite = /* GraphQL */ `
-  subscription OnUpdateFavorite {
-    onUpdateFavorite {
+  subscription OnUpdateFavorite($filter: ModelSubscriptionFavoriteFilterInput) {
+    onUpdateFavorite(filter: $filter) {
       id
       businessID
       userID
       createdAt
       updatedAt
+      owner
+      __typename
     }
   }
 `;
-
 export const onDeleteFavorite = /* GraphQL */ `
-  subscription OnDeleteFavorite {
-    onDeleteFavorite {
+  subscription OnDeleteFavorite($filter: ModelSubscriptionFavoriteFilterInput) {
+    onDeleteFavorite(filter: $filter) {
       id
+      businessID
+      userID
+      createdAt
+      updatedAt
+      owner
+      __typename
     }
   }
 `;
-
 export const onCreateReservation = /* GraphQL */ `
-  subscription OnCreateReservation {
-    onCreateReservation {
+  subscription OnCreateReservation(
+    $filter: ModelSubscriptionReservationFilterInput
+  ) {
+    onCreateReservation(filter: $filter) {
       id
       businessID
       userID
@@ -157,13 +106,16 @@ export const onCreateReservation = /* GraphQL */ `
       status
       createdAt
       updatedAt
+      owner
+      __typename
     }
   }
 `;
-
 export const onUpdateReservation = /* GraphQL */ `
-  subscription OnUpdateReservation {
-    onUpdateReservation {
+  subscription OnUpdateReservation(
+    $filter: ModelSubscriptionReservationFilterInput
+  ) {
+    onUpdateReservation(filter: $filter) {
       id
       businessID
       userID
@@ -171,14 +123,121 @@ export const onUpdateReservation = /* GraphQL */ `
       status
       createdAt
       updatedAt
+      owner
+      __typename
     }
   }
 `;
-
 export const onDeleteReservation = /* GraphQL */ `
-  subscription OnDeleteReservation {
-    onDeleteReservation {
+  subscription OnDeleteReservation(
+    $filter: ModelSubscriptionReservationFilterInput
+  ) {
+    onDeleteReservation(filter: $filter) {
       id
+      businessID
+      userID
+      dateTime
+      status
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+  }
+`;
+export const onCreateBusiness = /* GraphQL */ `
+  subscription OnCreateBusiness($filter: ModelSubscriptionBusinessFilterInput) {
+    onCreateBusiness(filter: $filter) {
+      id
+      name
+      category
+      address
+      phoneNumber
+      website
+      rating
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+  }
+`;
+export const onUpdateBusiness = /* GraphQL */ `
+  subscription OnUpdateBusiness($filter: ModelSubscriptionBusinessFilterInput) {
+    onUpdateBusiness(filter: $filter) {
+      id
+      name
+      category
+      address
+      phoneNumber
+      website
+      rating
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+  }
+`;
+export const onDeleteBusiness = /* GraphQL */ `
+  subscription OnDeleteBusiness($filter: ModelSubscriptionBusinessFilterInput) {
+    onDeleteBusiness(filter: $filter) {
+      id
+      name
+      category
+      address
+      phoneNumber
+      website
+      rating
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+  }
+`;
+export const onCreateReview = /* GraphQL */ `
+  subscription OnCreateReview($filter: ModelSubscriptionReviewFilterInput) {
+    onCreateReview(filter: $filter) {
+      id
+      content
+      rating
+      businessID
+      userID
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+  }
+`;
+export const onUpdateReview = /* GraphQL */ `
+  subscription OnUpdateReview($filter: ModelSubscriptionReviewFilterInput) {
+    onUpdateReview(filter: $filter) {
+      id
+      content
+      rating
+      businessID
+      userID
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+  }
+`;
+export const onDeleteReview = /* GraphQL */ `
+  subscription OnDeleteReview($filter: ModelSubscriptionReviewFilterInput) {
+    onDeleteReview(filter: $filter) {
+      id
+      content
+      rating
+      businessID
+      userID
+      createdAt
+      updatedAt
+      owner
+      __typename
     }
   }
 `;

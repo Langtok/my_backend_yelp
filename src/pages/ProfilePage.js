@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Auth, API, graphqlOperation } from "aws-amplify";
-import { userByUsername } from "../graphql/queries";
-import { updateUser } from "../graphql/mutations";
+import { getUser } from "../graphql/queries";
+import { createUser, updateUser } from "../graphql/mutations";
 import styles from "./ProfilePage.module.css";
 
 export default function ProfilePage() {
@@ -13,25 +13,58 @@ export default function ProfilePage() {
 
   useEffect(() => {
     async function fetchUser() {
+      setLoading(true);
+      setError(null);
+
       try {
         const authUser = await Auth.currentAuthenticatedUser();
-        const response = await API.graphql(
-          graphqlOperation(userByUsername, { username: authUser.username })
-        );
+        const userId = authUser.attributes.sub; // Cognito unique ID
+        console.log("Authenticated User:", authUser);
+        console.log("User ID (sub):", userId);
 
-        if (response?.data?.userByUsername?.items?.length > 0) {
-          const userData = response.data.userByUsername.items[0];
-          setUser(authUser);
+        // 🔍 Fetch user from API
+        const response = await API.graphql(graphqlOperation(getUser, { id: userId }));
+        console.log("GraphQL Response:", response);
+
+        if (response?.data?.getUser) {
+          console.log("✅ User found:", response.data.getUser);
+          setUser(response.data.getUser);
           setProfile({
-            name: userData.name || "",
-            email: authUser.attributes.email || "",
+            name: response.data.getUser.name || "No Name",
+            email: authUser.attributes.email || "No Email",
           });
         } else {
-          setError("User not found in the database.");
+          console.warn("⚠️ User not found. Attempting to create new user...");
+
+          // 🔄 Create user if not found
+          const newUserResponse = await API.graphql(
+            graphqlOperation(createUser, {
+              input: {
+                id: userId,  // Use Cognito ID as unique identifier
+                username: authUser.username,
+                email: authUser.attributes.email,
+                name: authUser.attributes.name || "New User",
+                phoneNumber: authUser.attributes.phone_number || "",
+              },
+            })
+          );
+
+          console.log("🔄 New User Created:", newUserResponse);
+
+          if (newUserResponse?.data?.createUser) {
+            setUser(newUserResponse.data.createUser);
+            setProfile({
+              name: newUserResponse.data.createUser.name,
+              email: newUserResponse.data.createUser.email,
+            });
+          } else {
+            console.error("❌ User creation failed.");
+            setError("Failed to create a new user profile.");
+          }
         }
       } catch (err) {
-        console.error("Error fetching user:", err);
-        setError("Failed to load user data.");
+        console.error("❌ GraphQL Full Error:", err);
+        setError(`Failed to load user data: ${err.message}`);
       } finally {
         setLoading(false);
       }
@@ -45,13 +78,22 @@ export default function ProfilePage() {
     setError(null);
     setSuccessMessage("");
 
+    if (!user) {
+      setError("User not loaded. Please try again.");
+      return;
+    }
+
     try {
-      await API.graphql(
-        graphqlOperation(updateUser, { input: { id: user.username, name: profile.name } })
+      const updateResponse = await API.graphql(
+        graphqlOperation(updateUser, {
+          input: { id: user.id, name: profile.name },
+        })
       );
+
+      console.log("✅ Profile Updated:", updateResponse);
       setSuccessMessage("Profile updated successfully!");
     } catch (err) {
-      console.error("Error updating profile:", err);
+      console.error("❌ Error updating profile:", err);
       setError("Failed to update profile.");
     }
   }

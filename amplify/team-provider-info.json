@@ -17,6 +17,9 @@
       },
       "storage": {
         "resources": {}
+      },
+      "api": {
+        "mybackendyelp": {}
       }
     }
   }

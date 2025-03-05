@@ -6,6 +6,7 @@ import styles from "./Navigation.module.css";
 export function Navigation() {
   const [user, setUser] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [businessDropdown, setBusinessDropdown] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,6 +56,28 @@ export function Navigation() {
         <Link to="/search">Search</Link>
         <Link to="/favorites">Favorites</Link>
         <Link to="/reservations">Reservations</Link>
+
+        {/* Business Dropdown */}
+        <div
+          className={styles.dropdown}
+          onMouseEnter={() => setBusinessDropdown(true)}
+          onMouseLeave={() => setBusinessDropdown(false)}
+        >
+          <button className={styles.dropdownToggle}>Businesses ▼</button>
+          {businessDropdown && (
+            <div className={styles.dropdownMenu}>
+              <Link to="/business">View Businesses</Link> {/* ✅ View Businesses */}
+              {user && (
+                <>
+                  <Link to="/add-business">Add Business</Link> {/* ✅ Add Business */}
+                  <Link to="/edit-business">Edit Business</Link> {/* ✅ Edit Business */}
+                  <Link to="/delete-business">Delete Business</Link> {/* ✅ Delete Business */}
+                </>
+              )}
+            </div>
+          )}
+        </div>
+
         {user && <Link to="/profile">Profile</Link>}
       </div>
 
