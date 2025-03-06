@@ -56,29 +56,22 @@ export function Navigation() {
         <Link to="/search">Search</Link>
         <Link to="/favorites">Favorites</Link>
         <Link to="/reservations">Reservations</Link>
+        {user && <Link to="/profile">Profile</Link>}
 
-        {/* Business Dropdown */}
+        {/* Businesses Dropdown */}
         <div
           className={styles.dropdown}
           onMouseEnter={() => setBusinessDropdown(true)}
           onMouseLeave={() => setBusinessDropdown(false)}
         >
-          <button className={styles.dropdownToggle}>Businesses ▼</button>
+          <button className={styles.dropdownBtn}>Businesses ▼</button>
           {businessDropdown && (
-            <div className={styles.dropdownMenu}>
-              <Link to="/business">View Businesses</Link> {/* ✅ View Businesses */}
-              {user && (
-                <>
-                  <Link to="/add-business">Add Business</Link> {/* ✅ Add Business */}
-                  <Link to="/edit-business">Edit Business</Link> {/* ✅ Edit Business */}
-                  <Link to="/delete-business">Delete Business</Link> {/* ✅ Delete Business */}
-                </>
-              )}
+            <div className={styles.dropdownContent}>
+              <Link to="/add-business">Add Business</Link>
+              <Link to="/businesses">View Business</Link>
             </div>
           )}
         </div>
-
-        {user && <Link to="/profile">Profile</Link>}
       </div>
 
       <div className={styles.authButtons}>

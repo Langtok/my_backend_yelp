@@ -1,134 +1,170 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { API, Auth, Storage, graphqlOperation } from "aws-amplify";
+import { useNavigate, useParams } from "react-router-dom";
+import { Auth, API } from "aws-amplify";
 import { getBusiness } from "../../graphql/queries";
 import { updateBusiness } from "../../graphql/mutations";
 import styles from "./EditBusiness.module.css";
 
 export default function EditBusiness() {
-  const { businessID } = useParams();
+  const { id } = useParams(); // Get business ID from URL
   const navigate = useNavigate();
   const [business, setBusiness] = useState({
     name: "",
     category: "",
-    location: "",
-    description: "",
-    imageUrl: "",
+    address: "",
+    phoneNumber: "",
+    website: "",
+    rating: "",
+    region: "",
   });
 
-  const [imageFile, setImageFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(null);
+  const [error, setError] = useState(null);
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     async function fetchBusiness() {
+      setLoading(true);
+      setError(null);
+
       try {
         const authUser = await Auth.currentAuthenticatedUser();
-        const response = await API.graphql(graphqlOperation(getBusiness, { id: businessID }));
+        const response = await API.graphql({
+          query: getBusiness,
+          variables: { id },
+          authMode: "API_KEY", // ✅ Enforce authentication
+        });
 
-        if (!response.data.getBusiness) {
+        console.log("Business fetched:", response);
+
+        if (!response.data?.getBusiness) {
           setError("Business not found.");
           return;
         }
 
-        if (response.data.getBusiness.owner !== authUser.username) {
+        const businessData = response.data.getBusiness;
+        if (businessData.owner !== authUser.attributes.sub) {
           setError("You are not authorized to edit this business.");
           return;
         }
 
-        setBusiness(response.data.getBusiness);
-        setPreviewUrl(response.data.getBusiness.imageUrl);
+        setBusiness({
+          name: businessData.name,
+          category: businessData.category,
+          address: businessData.address,
+          phoneNumber: businessData.phoneNumber || "",
+          website: businessData.website || "",
+          rating: businessData.rating || "",
+          region: businessData.region || "",
+        });
       } catch (err) {
-        setError("Failed to load business details.");
         console.error("Error fetching business:", err);
+        setError("Failed to load business data.");
       } finally {
         setLoading(false);
       }
     }
 
     fetchBusiness();
-  }, [businessID]);
+  }, [id]);
 
-  function handleChange(e) {
-    setBusiness({ ...business, [e.target.name]: e.target.value });
-  }
-
-  function handleImageChange(e) {
-    const file = e.target.files[0];
-    if (file) {
-      setImageFile(file);
-      setPreviewUrl(URL.createObjectURL(file));
-    }
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setSaving(true);
-    setError("");
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setError(null);
+    setMessage("");
 
     try {
-      let updatedImageUrl = business.imageUrl;
-
-      if (imageFile) {
-        const fileName = `businessImages/${business.owner}-${Date.now()}-${imageFile.name}`;
-        await Storage.put(fileName, imageFile, {
-          contentType: imageFile.type,
-        });
-        updatedImageUrl = await Storage.get(fileName);
-      }
-
-      const updatedBusiness = {
-        id: businessID,
-        name: business.name,
-        category: business.category,
-        location: business.location,
-        description: business.description,
-        imageUrl: updatedImageUrl,
+      const input = {
+        id,
+        ...business,
+        rating: parseFloat(business.rating) || 0,
       };
 
-      await API.graphql(graphqlOperation(updateBusiness, { input: updatedBusiness }));
+      console.log("Updating business:", input);
 
-      alert("Business updated successfully!");
-      navigate(`/business/${businessID}`);
+      const response = await API.graphql({
+        query: updateBusiness,
+        variables: { input },
+        authMode: "AMAZON_COGNITO_USER_POOLS", // ✅ Use correct auth mode
+      });
+
+      console.log("Business updated successfully:", response);
+
+      setMessage("Business updated successfully!");
+      setTimeout(() => navigate(`/business/${id}`), 2000);
     } catch (err) {
-      setError("Failed to update business.");
       console.error("Error updating business:", err);
-    } finally {
-      setSaving(false);
+      setError("Failed to update business. Please try again.");
     }
   }
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className={styles.loading}>Loading...</p>;
   if (error) return <p className={styles.error}>{error}</p>;
 
   return (
-    <div className={styles.editBusinessContainer}>
+    <div className={styles.editBusinessPage}>
       <h1>Edit Business</h1>
+      {message && <p className={styles.success}>{message}</p>}
       {error && <p className={styles.error}>{error}</p>}
 
-      <form onSubmit={handleSubmit} className={styles.businessForm}>
+      <form className={styles.businessForm} onSubmit={handleSubmit}>
         <label>Business Name:</label>
-        <input type="text" name="name" value={business.name} onChange={handleChange} required />
+        <input
+          type="text"
+          value={business.name}
+          onChange={(e) => setBusiness({ ...business, name: e.target.value })}
+          required
+        />
 
         <label>Category:</label>
-        <input type="text" name="category" value={business.category} onChange={handleChange} required />
+        <input
+          type="text"
+          value={business.category}
+          onChange={(e) => setBusiness({ ...business, category: e.target.value })}
+          required
+        />
 
-        <label>Location:</label>
-        <input type="text" name="location" value={business.location} onChange={handleChange} required />
+        <label>Address:</label>
+        <input
+          type="text"
+          value={business.address}
+          onChange={(e) => setBusiness({ ...business, address: e.target.value })}
+          required
+        />
 
-        <label>Description:</label>
-        <textarea name="description" value={business.description} onChange={handleChange} required></textarea>
+        <label>Phone Number:</label>
+        <input
+          type="tel"
+          value={business.phoneNumber}
+          onChange={(e) => setBusiness({ ...business, phoneNumber: e.target.value })}
+        />
 
-        <label>Upload New Image:</label>
-        <input type="file" accept="image/*" onChange={handleImageChange} />
+        <label>Website:</label>
+        <input
+          type="url"
+          value={business.website}
+          onChange={(e) => setBusiness({ ...business, website: e.target.value })}
+        />
 
-        {previewUrl && <img src={previewUrl} alt="Preview" className={styles.previewImage} />}
+        <label>Rating (1-5):</label>
+        <input
+          type="number"
+          value={business.rating}
+          onChange={(e) => setBusiness({ ...business, rating: e.target.value })}
+          min="1"
+          max="5"
+          step="0.1"
+        />
 
-        <button type="submit" className="btn-primary" disabled={saving}>
-          {saving ? "Saving..." : "Save Changes"}
-        </button>
+        <label>Region:</label>
+        <input
+          type="text"
+          value={business.region}
+          onChange={(e) => setBusiness({ ...business, region: e.target.value })}
+          required
+        />
+
+        <button type="submit" className="btn-primary">Update Business</button>
       </form>
     </div>
   );

@@ -14,7 +14,9 @@ export function BusinessCard({ business }) {
       <div className={styles.info}>
         <h3>{business.name}</h3>
         <p>{business.address || "No address provided"}</p>
-        <p>⭐ {business.rating ?? "N/A"} ({business.reviewCount ?? 0} reviews)</p>
+        <p>
+          <span role="img" aria-label="star">⭐</span> {business.rating ?? "N/A"} ({business.reviewCount ?? 0} reviews)
+        </p>
         <Link to={`/business/${business.id}`} className="btn-primary">View Details</Link>
       </div>
     </div>

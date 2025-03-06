@@ -1,56 +1,66 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { API, Auth, Storage, graphqlOperation } from "aws-amplify";
-import { deleteBusiness } from "../../graphql/mutations";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Auth, API, graphqlOperation } from "aws-amplify";
+import { getBusiness } from "../graphql/queries";
+import { deleteBusiness } from "../graphql/mutations";
 import styles from "./DeleteBusiness.module.css";
 
-export default function DeleteBusiness({ business }) {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+export default function DeleteBusiness() {
+  const { id } = useParams();
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [business, setBusiness] = useState(null);
+
+  useEffect(() => {
+    async function fetchBusiness() {
+      try {
+        const authUser = await Auth.currentAuthenticatedUser();
+
+        const response = await API.graphql(graphqlOperation(getBusiness, { id }));
+        if (!response?.data?.getBusiness) {
+          setError("Business not found.");
+          return;
+        }
+
+        const businessData = response.data.getBusiness;
+        if (businessData.owner !== authUser.attributes.sub) {
+          setError("You are not authorized to delete this business.");
+          return;
+        }
+
+        setBusiness(businessData);
+      } catch (err) {
+        console.error("Error fetching business:", err);
+        setError("Failed to load business data.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchBusiness();
+  }, [id]);
 
   async function handleDelete() {
-    const confirmDelete = window.confirm(
-      `Are you sure you want to delete "${business.name}"? This action cannot be undone.`
-    );
-
-    if (!confirmDelete) return;
-
-    setLoading(true);
-    setError("");
-
     try {
-      const authUser = await Auth.currentAuthenticatedUser();
-      if (business.owner !== authUser.username) {
-        setError("You are not authorized to delete this business.");
-        return;
-      }
-
-      // Delete image from S3 if exists
-      if (business.imageUrl) {
-        const fileName = business.imageUrl.split("/").pop(); // Extract file name
-        await Storage.remove(`businessImages/${fileName}`);
-      }
-
-      // Delete business from database
-      await API.graphql(graphqlOperation(deleteBusiness, { input: { id: business.id } }));
-
-      alert("Business deleted successfully!");
-      navigate("/");
+      await API.graphql(graphqlOperation(deleteBusiness, { input: { id } }));
+      setError(null);
+      navigate("/"); // Redirect to home after deletion
     } catch (err) {
-      setError("Failed to delete business.");
       console.error("Error deleting business:", err);
-    } finally {
-      setLoading(false);
+      setError("Failed to delete business. Please try again.");
     }
   }
 
+  if (loading) return <p className={styles.loading}>Loading...</p>;
+  if (error) return <p className={styles.error}>{error}</p>;
+
   return (
-    <div className={styles.deleteBusinessContainer}>
-      {error && <p className={styles.error}>{error}</p>}
-      <button onClick={handleDelete} className="btn-danger" disabled={loading}>
-        {loading ? "Deleting..." : "Delete Business"}
-      </button>
+    <div className={styles.deleteBusinessPage}>
+      <h1>Delete Business</h1>
+      <p>Are you sure you want to delete <strong>{business?.name}</strong>?</p>
+      <button className="btn-danger" onClick={handleDelete}>Delete Business</button>
+      <button className="btn-secondary" onClick={() => navigate(-1)}>Cancel</button>
     </div>
   );
 }

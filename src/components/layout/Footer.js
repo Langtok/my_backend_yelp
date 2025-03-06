@@ -10,7 +10,7 @@ export function Footer() {
         <Link to="/about">About</Link>
         <Link to="/contact">Contact</Link>
         <Link to="/privacy">Privacy Policy</Link>
-        <a href="https://github.com/YelpClone" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/Langtok" target="_blank" rel="noopener noreferrer">
           GitHub
         </a>
       </nav>

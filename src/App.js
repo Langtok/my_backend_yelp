@@ -6,6 +6,7 @@ import awsExports from "./aws-exports";
 import HomePage from "./pages/HomePage";
 import SearchPage from "./pages/SearchPage";
 import BusinessPage from "./pages/BusinessPage";
+import BusinessesPage from "./pages/BusinessesPage"; // ✅ Import BusinessesPage
 import ReviewPage from "./pages/ReviewPage";
 import EditReviewPage from "./pages/EditReviewPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -16,7 +17,9 @@ import SignupPage from "./pages/SignupPage";
 import ConfirmSignup from "./pages/ConfirmSignup";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
-import AddBusinessPage from "./pages/AddBusinessPage"; // ✅ Added missing route
+import AddBusinessPage from "./pages/AddBusinessPage";
+import EditBusiness from "./components/Business/EditBusiness"; // ✅ Add this import
+
 
 import { Navigation } from "./components/layout/Navigation";
 import { Footer } from "./components/layout/Footer";
@@ -36,6 +39,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/search/:term/:location" element={<SearchPage />} />
         <Route path="/business/:id" element={<BusinessPage />} />
+        <Route path="/businesses" element={<BusinessesPage />} />
         <Route path="/review/:businessID" element={<ReviewPage />} />
         <Route path="/edit-review/:reviewID" element={<EditReviewPage />} />
 
@@ -43,7 +47,8 @@ export default function App() {
         <Route path="/favorites" element={<RequireAuth><FavoritesPage /></RequireAuth>} />
         <Route path="/reservations" element={<RequireAuth><ReservationsPage /></RequireAuth>} />
         <Route path="/profile" element={<RequireAuth><ProfilePage /></RequireAuth>} />
-        <Route path="/add-business" element={<RequireAuth><AddBusinessPage /></RequireAuth>} /> 
+        <Route path="/add-business" element={<RequireAuth><AddBusinessPage /></RequireAuth>} />
+        <Route path="/edit-business/:id" element={<RequireAuth><EditBusiness /></RequireAuth>} />
 
         {/* Authentication Routes */}
         <Route path="/login" element={<LoginPage />} />

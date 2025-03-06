@@ -249,6 +249,7 @@ export const getBusiness = /* GraphQL */ `
       phoneNumber
       website
       rating
+      region
       createdAt
       updatedAt
       owner
@@ -271,6 +272,7 @@ export const listBusinesses = /* GraphQL */ `
         phoneNumber
         website
         rating
+        region
         createdAt
         updatedAt
         owner

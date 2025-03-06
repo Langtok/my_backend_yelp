@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { API, graphqlOperation } from "aws-amplify";
+import { API } from "aws-amplify";
 import { listReviews } from "../../graphql/queries";
 import { ReviewCard } from "../Reviews/ReviewCard";
 import styles from "./BusinessReview.module.css";
@@ -11,16 +11,31 @@ export function BusinessReview({ businessId }) {
 
   useEffect(() => {
     async function fetchReviews() {
+      setLoading(true);
+      setError(null);
+
       try {
-        const response = await API.graphql(
-          graphqlOperation(listReviews, {
-            filter: { businessID: { eq: businessId } },
-          })
-        );
-        setReviews(response.data.listReviews.items);
+        const response = await API.graphql({
+          query: listReviews,
+          variables: { filter: { businessID: { eq: businessId } } },
+          authMode: "API_KEY", // ✅ Ensure public access to read reviews
+        });
+
+        console.log("Fetched Reviews:", response);
+
+        if (response.data.listReviews?.items?.length > 0) {
+          setReviews(response.data.listReviews.items);
+        } else {
+          setError("No reviews found.");
+        }
       } catch (err) {
         console.error("Error fetching reviews:", err);
-        setError("Failed to load reviews.");
+
+        if (err.errors && err.errors[0]?.errorType === "Unauthorized") {
+          setError("You do not have permission to view reviews.");
+        } else {
+          setError("Failed to load reviews.");
+        }
       } finally {
         setLoading(false);
       }

@@ -5,7 +5,7 @@ type User
   { allow: private, operations: [read] } # Any signed-in user can read profiles
 ]) {
   id: ID!
-  username: String! # ❌ Removed @unique
+  username: String!
   email: String!
   name: String
   phoneNumber: String
@@ -24,6 +24,7 @@ type Business
   phoneNumber: String
   website: String
   rating: Float
+  region: String!
 }
 
 type Review 

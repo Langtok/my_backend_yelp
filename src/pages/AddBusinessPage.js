@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { API, Auth, graphqlOperation, Storage } from "aws-amplify";
+import { useNavigate } from "react-router-dom";
+import { API, graphqlOperation } from "aws-amplify";
 import { createBusiness } from "../graphql/mutations";
 import styles from "./AddBusinessPage.module.css";
 
@@ -7,91 +8,132 @@ export default function AddBusinessPage() {
   const [business, setBusiness] = useState({
     name: "",
     category: "",
-    location: "",
-    description: "",
-    imageUrl: "",
+    address: "",
+    phoneNumber: "",
+    website: "",
+    rating: "",
+    region: "", // ✅ Added region field
   });
 
-  const [imageFile, setImageFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
-  function handleChange(e) {
-    setBusiness({ ...business, [e.target.name]: e.target.value });
-  }
-
-  function handleImageChange(e) {
-    const file = e.target.files[0];
-    if (file) {
-      setImageFile(file);
-      setPreviewUrl(URL.createObjectURL(file));
-    }
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
-
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setError(null);
+    setMessage("");
+  
     try {
-      const authUser = await Auth.currentAuthenticatedUser();
-
-      let uploadedImageUrl = business.imageUrl;
-      if (imageFile) {
-        const fileName = `businessImages/${authUser.username}-${Date.now()}-${imageFile.name}`;
-        await Storage.put(fileName, imageFile, {
-          contentType: imageFile.type,
-        });
-        uploadedImageUrl = await Storage.get(fileName);
+      // const authUser = await Auth.currentAuthenticatedUser();
+  
+      if (!business.region.trim()) {
+        setError("Region is required.");
+        return;
       }
-
-      const newBusiness = {
-        ...business,
-        owner: authUser.username,
-        imageUrl: uploadedImageUrl, // Use uploaded image URL
+  
+      // ✅ Only include fields that exist in the schema
+      const input = {
+        name: business.name,
+        category: business.category,
+        address: business.address,
+        phoneNumber: business.phoneNumber || null,
+        website: business.website || null,
+        rating: parseFloat(business.rating) || 0,
+        region: business.region, // ✅ Schema includes "region"
       };
-
-      await API.graphql(graphqlOperation(createBusiness, { input: newBusiness }));
-
-      alert("Business added successfully!");
-      setBusiness({ name: "", category: "", location: "", description: "", imageUrl: "" });
-      setImageFile(null);
-      setPreviewUrl(null);
-    } catch (error) {
-      console.error("Error adding business:", error);
+  
+      console.log("Submitting business:", JSON.stringify(input, null, 2));
+  
+      const response = await API.graphql(graphqlOperation(createBusiness, { input }));
+      console.log("Business created successfully:", response);
+  
+      if (response.data.createBusiness) {
+        setMessage("Business added successfully!");
+        setTimeout(() => navigate(`/business/${response.data.createBusiness.id}`), 2000);
+      } else {
+        setError("Failed to add business. No data returned.");
+      }
+    } catch (err) {
+      console.error("Error adding business:", err);
       setError("Failed to add business. Please try again.");
-    } finally {
-      setLoading(false);
     }
   }
-
+  
+  
+  
+  
   return (
     <div className={styles.addBusinessPage}>
-      <h1>Add a New Business</h1>
+      <h1>Add Business</h1>
+      {message && <p className={styles.success}>{message}</p>}
       {error && <p className={styles.error}>{error}</p>}
 
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form className={styles.businessForm} onSubmit={handleSubmit}>
         <label>Business Name:</label>
-        <input type="text" name="name" value={business.name} onChange={handleChange} required />
+        <input
+          type="text"
+          placeholder="Enter business name"
+          value={business.name}
+          onChange={(e) => setBusiness({ ...business, name: e.target.value })}
+          required
+        />
 
         <label>Category:</label>
-        <input type="text" name="category" value={business.category} onChange={handleChange} required />
+        <input
+          type="text"
+          placeholder="Enter category"
+          value={business.category}
+          onChange={(e) => setBusiness({ ...business, category: e.target.value })}
+          required
+        />
 
-        <label>Location:</label>
-        <input type="text" name="location" value={business.location} onChange={handleChange} required />
+        <label>Address:</label>
+        <input
+          type="text"
+          placeholder="Enter address"
+          value={business.address}
+          onChange={(e) => setBusiness({ ...business, address: e.target.value })}
+          required
+        />
 
-        <label>Description:</label>
-        <textarea name="description" value={business.description} onChange={handleChange} required></textarea>
+        <label>Phone Number:</label>
+        <input
+          type="tel"
+          placeholder="Enter phone number"
+          value={business.phoneNumber}
+          onChange={(e) => setBusiness({ ...business, phoneNumber: e.target.value })}
+        />
 
-        <label>Upload Image:</label>
-        <input type="file" accept="image/*" onChange={handleImageChange} />
+        <label>Website:</label>
+        <input
+          type="url"
+          placeholder="Enter website URL"
+          value={business.website}
+          onChange={(e) => setBusiness({ ...business, website: e.target.value })}
+        />
 
-        {previewUrl && <img src={previewUrl} alt="Preview" className={styles.previewImage} />}
+        <label>Rating (1-5):</label>
+        <input
+          type="number"
+          placeholder="Enter rating"
+          value={business.rating}
+          onChange={(e) => setBusiness({ ...business, rating: e.target.value })}
+          min="1"
+          max="5"
+          step="0.1"
+        />
 
-        <button type="submit" className="btn-primary" disabled={loading}>
-          {loading ? "Adding..." : "Add Business"}
-        </button>
+        <label>Region:</label>
+        <input
+          type="text"
+          placeholder="Enter region"
+          value={business.region}
+          onChange={(e) => setBusiness({ ...business, region: e.target.value })}
+          required
+        />
+
+        <button type="submit" className="btn-primary">Add Business</button>
       </form>
     </div>
   );

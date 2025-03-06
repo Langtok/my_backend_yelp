@@ -68,6 +68,7 @@ export const createBusiness = /* GraphQL */ `
       phoneNumber
       website
       rating
+      region
       createdAt
       updatedAt
       owner
@@ -88,6 +89,7 @@ export const updateBusiness = /* GraphQL */ `
       phoneNumber
       website
       rating
+      region
       createdAt
       updatedAt
       owner
@@ -108,6 +110,7 @@ export const deleteBusiness = /* GraphQL */ `
       phoneNumber
       website
       rating
+      region
       createdAt
       updatedAt
       owner
