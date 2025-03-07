@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // ✅ Import Link
 import { Auth } from "aws-amplify";
 import styles from "./LoginPage.module.css";
 
@@ -36,6 +36,7 @@ export default function LoginPage() {
     <div className={styles.loginPage}>
       <h2>Login</h2>
       {error && <p className={styles.error}>{error}</p>}
+      
       <form className={styles.loginForm} onSubmit={handleLogin}>
         <label>Email:</label>
         <input
@@ -54,6 +55,11 @@ export default function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+
+        {/* ✅ Forgot Password Link */}
+        <div className={styles.forgotPassword}>
+          <Link to="/forgot-password">Forgot Password?</Link>
+        </div>
 
         <button type="submit" className="btn-primary" disabled={loading}>
           {loading ? "Logging in..." : "Login"}

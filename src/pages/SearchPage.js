@@ -16,7 +16,7 @@ export default function SearchPage() {
   return (
     <div className={styles.searchPage}>
       <h2>
-        Search results for "<strong>{term}</strong>" in "<strong>{location}</strong>"
+        Search results for <strong style={{ color: "#f1c40f" }}>{term}</strong> in <strong style={{ color: "#ff5733" }}>{location}</strong>
       </h2>
       <Filters setFilters={setFilters} />
       {loading ? <p>Loading results...</p> : <SearchResultList term={term} location={location} filters={filters} />}

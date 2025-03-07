@@ -152,6 +152,7 @@ export const onCreateBusiness = /* GraphQL */ `
       name
       category
       address
+      location
       phoneNumber
       website
       rating
@@ -170,6 +171,7 @@ export const onUpdateBusiness = /* GraphQL */ `
       name
       category
       address
+      location
       phoneNumber
       website
       rating
@@ -188,6 +190,7 @@ export const onDeleteBusiness = /* GraphQL */ `
       name
       category
       address
+      location
       phoneNumber
       website
       rating

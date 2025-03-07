@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Auth, API } from "aws-amplify";
+import { API } from "aws-amplify";
 import { getBusiness } from "../../graphql/queries";
 import { updateBusiness } from "../../graphql/mutations";
 import styles from "./EditBusiness.module.css";
 
 export default function EditBusiness() {
-  const { id } = useParams(); // Get business ID from URL
+  const { id } = useParams();
   const navigate = useNavigate();
   const [business, setBusiness] = useState({
     name: "",
     category: "",
     address: "",
+    location: "",
     phoneNumber: "",
     website: "",
     rating: "",
@@ -28,30 +29,23 @@ export default function EditBusiness() {
       setError(null);
 
       try {
-        const authUser = await Auth.currentAuthenticatedUser();
         const response = await API.graphql({
           query: getBusiness,
-          variables: { id },
-          authMode: "API_KEY", // ✅ Enforce authentication
+          authMode: "API_KEY", // ✅ Uses signed-in user authentication
+          variables: { id }
         });
 
-        console.log("Business fetched:", response);
-
-        if (!response.data?.getBusiness) {
+        if (!response?.data?.getBusiness) {
           setError("Business not found.");
           return;
         }
 
         const businessData = response.data.getBusiness;
-        if (businessData.owner !== authUser.attributes.sub) {
-          setError("You are not authorized to edit this business.");
-          return;
-        }
-
         setBusiness({
           name: businessData.name,
           category: businessData.category,
           address: businessData.address,
+          location: businessData.location || "Location not provided",
           phoneNumber: businessData.phoneNumber || "",
           website: businessData.website || "",
           rating: businessData.rating || "",
@@ -59,7 +53,7 @@ export default function EditBusiness() {
         });
       } catch (err) {
         console.error("Error fetching business:", err);
-        setError("Failed to load business data.");
+        setError("Failed to load business data. You might not have permission.");
       } finally {
         setLoading(false);
       }
@@ -76,19 +70,23 @@ export default function EditBusiness() {
     try {
       const input = {
         id,
-        ...business,
+        name: business.name,
+        category: business.category,
+        address: business.address,
+        location: business.location,
+        phoneNumber: business.phoneNumber || null,
+        website: business.website || null,
         rating: parseFloat(business.rating) || 0,
+        region: business.region,
       };
 
-      console.log("Updating business:", input);
+      console.log("Updating business:", JSON.stringify(input, null, 2));
 
-      const response = await API.graphql({
+      await API.graphql({
         query: updateBusiness,
-        variables: { input },
-        authMode: "AMAZON_COGNITO_USER_POOLS", // ✅ Use correct auth mode
+        authMode: "AMAZON_COGNITO_USER_POOLS", // ✅ Ensure only signed-in users can update
+        variables: { input }
       });
-
-      console.log("Business updated successfully:", response);
 
       setMessage("Business updated successfully!");
       setTimeout(() => navigate(`/business/${id}`), 2000);
@@ -129,6 +127,14 @@ export default function EditBusiness() {
           type="text"
           value={business.address}
           onChange={(e) => setBusiness({ ...business, address: e.target.value })}
+          required
+        />
+
+        <label>Location:</label>
+        <input
+          type="text"
+          value={business.location}
+          onChange={(e) => setBusiness({ ...business, location: e.target.value })}
           required
         />
 

@@ -14,18 +14,20 @@ type User
 type Business 
 @model 
 @auth(rules: [
-  { allow: public, operations: [read] }, # Anyone can read business listings
-  { allow: owner, operations: [create, update, delete] } # Only business owner can modify or delete
+  { allow: public, operations: [read] }, 
+  { allow: owner, operations: [create, update, delete] }
 ]) {
   id: ID!
   name: String!
   category: String!
   address: String!
+  location: String
   phoneNumber: String
   website: String
   rating: Float
   region: String!
 }
+
 
 type Review 
 @model 

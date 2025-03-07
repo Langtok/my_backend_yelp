@@ -95,3 +95,8 @@ input:focus, textarea:focus {
   justify-content: center;
   align-items: center;
 }
+
+.app-container {
+  padding-top: 70px; /* Leaves space below the navbar */
+  padding-bottom: 70px; /* Leaves space above the footer */
+}

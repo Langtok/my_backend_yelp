@@ -29,12 +29,22 @@ import "bulma/css/bulma.css";
 import "./styles/global.css";
 
 // Configure AWS Amplify
-Amplify.configure(awsExports);
+Amplify.configure({
+  ...awsExports,
+  Storage: {
+    AWSS3: {
+      bucket: awsExports.aws_user_files_s3_bucket,
+      region: awsExports.aws_user_files_s3_bucket_region,  // ✅ Explicitly set region
+      level: "public",
+    }
+  }
+});
 
 export default function App() {
   return (
     <Router>
       <Navigation />
+      <div className="app-container"> 
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/search/:term/:location" element={<SearchPage />} />
@@ -57,6 +67,7 @@ export default function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
+      </div>
       <Footer />
     </Router>
   );

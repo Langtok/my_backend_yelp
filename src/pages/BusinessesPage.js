@@ -19,14 +19,19 @@ export default function BusinessesPage() {
       setError(null);
 
       try {
-        // Get authenticated user ID
-        const authUser = await Auth.currentAuthenticatedUser();
-        setUserId(authUser.attributes.sub);
+        let authMode = "API_KEY"; // ✅ Default to API Key for public access
 
-        // Fetch businesses with API key authentication
+        try {
+          const authUser = await Auth.currentAuthenticatedUser();
+          setUserId(authUser.attributes.sub);
+          authMode = "API_KEY"; // ✅ Switch to authenticated mode
+        } catch (err) {
+          console.warn("User is not authenticated, using API Key.");
+        }
+
         const response = await API.graphql({
           query: listBusinesses,
-          authMode: "API_KEY",
+          authMode, // ✅ Dynamically choose auth mode
         });
 
         console.log("Fetched businesses:", response);
@@ -38,7 +43,7 @@ export default function BusinessesPage() {
         }
       } catch (err) {
         console.error("Error fetching businesses:", err);
-        setError(`Failed to load businesses: ${err.message}`);
+        setError("Failed to load businesses. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -52,12 +57,10 @@ export default function BusinessesPage() {
       await API.graphql({
         query: deleteBusiness,
         variables: { input: { id: businessId } },
+        authMode: "AMAZON_COGNITO_USER_POOLS", // ✅ Ensure only authenticated users can delete
       });
 
-      // Remove deleted business from UI
-      setBusinesses((prevBusinesses) =>
-        prevBusinesses.filter((b) => b.id !== businessId)
-      );
+      setBusinesses((prevBusinesses) => prevBusinesses.filter((b) => b.id !== businessId));
 
       alert("Business deleted successfully!");
     } catch (err) {

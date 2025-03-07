@@ -246,6 +246,7 @@ export const getBusiness = /* GraphQL */ `
       name
       category
       address
+      location
       phoneNumber
       website
       rating
@@ -269,6 +270,7 @@ export const listBusinesses = /* GraphQL */ `
         name
         category
         address
+        location
         phoneNumber
         website
         rating

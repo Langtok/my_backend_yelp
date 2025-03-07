@@ -12,7 +12,8 @@ export default function AddBusinessPage() {
     phoneNumber: "",
     website: "",
     rating: "",
-    region: "", // ✅ Added region field
+    region: "",
+    location: "",
   });
 
   const [error, setError] = useState(null);
@@ -23,16 +24,22 @@ export default function AddBusinessPage() {
     event.preventDefault();
     setError(null);
     setMessage("");
-  
+
+    console.log("Business Data Before Submission:", business);
+
+    if (!business.region.trim()) {
+      setError("Region is required.");
+      console.error("Error: Region is missing.");
+      return;
+    }
+
+    if (!business.location.trim()) {
+      setError("Location is required.");
+      console.error("Error: Location is missing.");
+      return;
+    }
+
     try {
-      // const authUser = await Auth.currentAuthenticatedUser();
-  
-      if (!business.region.trim()) {
-        setError("Region is required.");
-        return;
-      }
-  
-      // ✅ Only include fields that exist in the schema
       const input = {
         name: business.name,
         category: business.category,
@@ -40,14 +47,15 @@ export default function AddBusinessPage() {
         phoneNumber: business.phoneNumber || null,
         website: business.website || null,
         rating: parseFloat(business.rating) || 0,
-        region: business.region, // ✅ Schema includes "region"
+        region: business.region.trim(),
+        location: business.location.trim(),
       };
-  
+
       console.log("Submitting business:", JSON.stringify(input, null, 2));
-  
+
       const response = await API.graphql(graphqlOperation(createBusiness, { input }));
       console.log("Business created successfully:", response);
-  
+
       if (response.data.createBusiness) {
         setMessage("Business added successfully!");
         setTimeout(() => navigate(`/business/${response.data.createBusiness.id}`), 2000);
@@ -59,10 +67,7 @@ export default function AddBusinessPage() {
       setError("Failed to add business. Please try again.");
     }
   }
-  
-  
-  
-  
+
   return (
     <div className={styles.addBusinessPage}>
       <h1>Add Business</h1>
@@ -128,8 +133,17 @@ export default function AddBusinessPage() {
         <input
           type="text"
           placeholder="Enter region"
-          value={business.region}
+          value={business.region || ""}
           onChange={(e) => setBusiness({ ...business, region: e.target.value })}
+          required
+        />
+
+        <label>Location:</label>
+        <input
+          type="text"
+          placeholder="Enter location"
+          value={business.location || ""}
+          onChange={(e) => setBusiness({ ...business, location: e.target.value })}
           required
         />
 

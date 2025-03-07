@@ -5,6 +5,12 @@
   background-color: #d32323;
   padding: 10px 20px;
   color: white;
+  width: 100%;
+  justify-content: space-between;
+  position: fixed; /* ✅ Keeps navbar fixed at the top */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* ✅ Ensures it stays above other elements */
 }
 
 .logo a {
@@ -44,7 +50,7 @@
   background: #fff5f5;
 }
 
-.loginBtn:hover, .signupBtn:hover {
+.loginBtn:hover, .signupBtn:hover, .navLinks:hover {
   background: #ffcccc;
 }
 

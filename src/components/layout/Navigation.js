@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Auth, Hub } from "aws-amplify";
+import logo from "../../assets/images/logo.png"; // ✅ Import your logo
 import styles from "./Navigation.module.css";
 
 export function Navigation() {
@@ -44,7 +45,11 @@ export function Navigation() {
   return (
     <nav className={styles.navbar}>
       <div className={styles.logo}>
-        <Link to="/">YelpClone</Link>
+      <nav>
+      <Link to="/">
+        <img src={logo} alt="YelpClone Logo" style={{ height: "40px" }} />
+      </Link>
+    </nav>
       </div>
 
       {/* Mobile Menu Toggle */}
@@ -53,7 +58,6 @@ export function Navigation() {
       </button>
 
       <div className={`${styles.navLinks} ${menuOpen ? styles.open : ""}`}>
-        <Link to="/search">Search</Link>
         <Link to="/favorites">Favorites</Link>
         <Link to="/reservations">Reservations</Link>
         {user && <Link to="/profile">Profile</Link>}
@@ -68,6 +72,7 @@ export function Navigation() {
           {businessDropdown && (
             <div className={styles.dropdownContent}>
               <Link to="/add-business">Add Business</Link>
+              <br></br>
               <Link to="/businesses">View Business</Link>
             </div>
           )}

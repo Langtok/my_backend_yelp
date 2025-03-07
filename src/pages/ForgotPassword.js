@@ -1,19 +1,28 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
+import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 import styles from "./ForgotPassword.module.css";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate(); // ✅ Initialize navigation
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setMessage("");
+
     try {
       await Auth.forgotPassword(email);
-      setMessage("Password reset code sent. Check your email.");
+      setMessage("Password reset code sent. Redirecting...");
+      
+      // ✅ Redirect to Reset Password page after 2 seconds
+      setTimeout(() => {
+        navigate(`/reset-password?email=${encodeURIComponent(email)}`);
+      }, 2000);
+      
     } catch (err) {
       setError(err.message);
     }
