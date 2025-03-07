@@ -7,7 +7,7 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "auth": {
-    "mybackendyelp975d5e17": {
+    "mybackendyelp0c5e4303": {
       "AppClientID": "string",
       "AppClientIDWeb": "string",
       "IdentityPoolId": "string",
@@ -18,7 +18,7 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "storage": {
-    "resources": {
+    "backendyelp": {
       "BucketName": "string",
       "Region": "string"
     }

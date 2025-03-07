@@ -7,7 +7,7 @@
             "UserPoolId"
           ],
           "category": "auth",
-          "resourceName": "mybackendyelp975d5e17"
+          "resourceName": "mybackendyelp0c5e4303"
         }
       ],
       "output": {
@@ -15,7 +15,7 @@
           "additionalAuthenticationProviders": [
             {
               "apiKeyConfig": {
-                "apiKeyExpirationDate": "2026-03-04T23:37:26.209Z",
+                "apiKeyExpirationDate": "2026-03-07T10:01:39.778Z",
                 "apiKeyExpirationDays": 365,
                 "description": "mybackendyelp"
               },
@@ -25,7 +25,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authmybackendyelp975d5e17"
+              "userPoolId": "authmybackendyelp0c5e4303"
             }
           }
         }
@@ -35,7 +35,7 @@
     }
   },
   "auth": {
-    "mybackendyelp975d5e17": {
+    "mybackendyelp0c5e4303": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -62,8 +62,33 @@
       "service": "Cognito"
     }
   },
+  "hosting": {
+    "amplifyhosting": {
+      "providerPlugin": "awscloudformation",
+      "service": "amplifyhosting",
+      "type": "manual"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_hosting_amplifyhosting_appId": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
+        }
+      ]
+    },
+    "AMPLIFY_hosting_amplifyhosting_type": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
+        }
+      ]
+    }
+  },
   "storage": {
-    "resources": {
+    "backendyelp": {
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "S3"
